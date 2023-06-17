@@ -1,28 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
 import GlobalStyle from "./styles/GlobalStyle";
 import {ThemeProvider} from "styled-components";
 import {Theme} from "./styles/Theme";
+import LogInBtn from "./components/LogInBtn";
+import WriteBtn from "./components/WriteBtn";
+import DeleteBtn from "./components/DeleteBtn";
+import Header from "./components/Header";
 
 function App() {
   return (
     <div className="App">
         <ThemeProvider theme={Theme} >
             <GlobalStyle />
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <p>
-                    Edit <code>src/App.js</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
-            </header>
+            <LogInBtn isAble={false}/>
+            <LogInBtn isAble={true}/>
+
+            <WriteBtn isAble={false}/>
+            <WriteBtn isAble={true}/>
+
+            <DeleteBtn />
+
+            <Header />
+
         </ThemeProvider>
     </div>
   );
