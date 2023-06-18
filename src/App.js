@@ -2,9 +2,9 @@ import './App.css';
 import GlobalStyle from "./styles/GlobalStyle";
 import {ThemeProvider} from "styled-components";
 import {Theme} from "./styles/Theme";
-import LongBtn from "./components/LongBtn";
-import ShortBtn from "./components/ShortBtn";
 import Header from "./components/Header";
+import Login from "./pages/Login";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 
 function App() {
@@ -12,13 +12,12 @@ function App() {
     <div className="App">
         <ThemeProvider theme={Theme} >
             <GlobalStyle />
-
-            <Header />
-            <LongBtn isAble={false}/>
-            <LongBtn isAble={true}/>
-            <ShortBtn isAble={false} text={"작성하기"} type={"W"}/>
-            <ShortBtn isAble={true} text={"작성하기"} type={"W"} />
-            <ShortBtn text={"삭제하기"} type={"D"}/>
+            <BrowserRouter>
+                <Header isLoggedIn={false} />
+                <Routes>
+                    <Route index path={"/login"} element={<Login/>} />
+                </Routes>
+            </BrowserRouter>
         </ThemeProvider>
     </div>
   );

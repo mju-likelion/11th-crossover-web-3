@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 
-const ShortBtn = (props) => {
-    const {isAble, text, type} = props;
+const ShortBtn = ({isAble, text, type}) => {
 
     return (
         <ButtonStyle isAble={isAble} text={text} type={type}>
@@ -12,7 +11,7 @@ const ShortBtn = (props) => {
 };
 
 
-const ButtonStyle = styled.div`
+const ButtonStyle = styled.button`
   width: 233px;
   height: 70px;
   border-radius: 25px;
