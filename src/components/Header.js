@@ -12,6 +12,7 @@ const Header = () => {
     );
 };
 
+
 const HeaderStyle = styled.div`
   width: 1920px;
   height: 116px;

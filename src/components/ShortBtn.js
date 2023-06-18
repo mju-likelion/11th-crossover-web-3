@@ -1,22 +1,22 @@
 import styled from "styled-components";
 
 
-const LogInBtn = (props) => {
-    const {isAble} = props;
+const ShortBtn = (props) => {
+    const {isAble, text, type} = props;
+
     return (
-        <ButtonStyle isAble={isAble}>
-            삭제하기
+        <ButtonStyle isAble={isAble} text={text} type={type}>
+            {text}
         </ButtonStyle>
     );
 };
+
 
 const ButtonStyle = styled.div`
   width: 233px;
   height: 70px;
   border-radius: 25px;
-  
-  //false일 대 BLUE1, true일 때 #59A4FB
-  background-color: #717171;
+  background-color: ${({isAble, theme, type}) => type==="D" ? "#717171" : ((isAble && type==="W") ? "#2186FC" : theme.colors.BLUE1)};
   font-size: 21px;
   font-weight: 600;
   color: white;
@@ -26,4 +26,4 @@ const ButtonStyle = styled.div`
   align-items: center;
 `
 
-export default LogInBtn;
+export default ShortBtn;
