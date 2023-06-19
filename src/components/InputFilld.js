@@ -1,18 +1,47 @@
 import styled from "styled-components";
 import CANCEL_ICON from "../asset/images/icon_cancel.svg";
+import ERROR_ICON from "../asset/images/icon_error.svg";
+import SUCCESS_ICON from "../asset/images/icon_success.svg";
+import { useState } from "react";
 
-const input = (props) => {
-  const { isAble } = props;
+const InputFilld = () => {
+  const [inputWrite, setinputWrite] = useState(false);
+  const [inputShowImg, setinputShowImg] = useState(false);
+  const [inputState, setinputState] = useState(false);
+  const displayText = (e) => {
+    setinputWrite(e.target.value);
+  };
+
+  const onReset = (e) => {
+    setinputWrite("");
+  };
+
   return (
     <>
-      <InputBox>
-        <InputFrame>
-          <InputStyle placeholder="input filled" isAble={isAble}></InputStyle>
-          <CancelBtn>
-            <CancelImg src={CANCEL_ICON} />
+      <InputContainer>
+        <InputBox>
+          <InputStyle
+            onChange={displayText}
+            value={inputWrite}
+            placeholder="input filled"
+          />
+          <ShowImg>
+            {inputShowImg ? (
+              inputState ? (
+                <InputImg src={SUCCESS_ICON} />
+              ) : (
+                <InputImg src={ERROR_ICON} />
+              )
+            ) : (
+              ""
+            )}
+          </ShowImg>
+          <CancelBtn onClick={onReset}>
+            {inputWrite ? <img src={CANCEL_ICON} /> : ""}
           </CancelBtn>
-        </InputFrame>
-      </InputBox>
+        </InputBox>
+        <HelperText>helper text</HelperText>
+      </InputContainer>
     </>
   );
 };
@@ -27,18 +56,20 @@ const InputBox = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.GRAY};
 `;
 
-const InputFrame = styled.div`
+const InputContainer = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
-  width: 483px;
-  height: 32px;
+  flex-direction: column;
 `;
 
 const InputStyle = styled.input`
-  width: 440px;
+  display: flex;
+  width: 393px;
   height: 28px;
   border: none;
   font-size: 20px;
+
   &::placeholder {
     font-size: 20px;
     color: rgba(0, 0, 0, 0.45);
@@ -46,11 +77,24 @@ const InputStyle = styled.input`
 `;
 
 const CancelBtn = styled.button`
-  margin-left: 11px;
   width: 32px;
   height: 32px;
 `;
 
-const CancelImg = styled.img``;
+const HelperText = styled.p`
+  height: 19px;
+  width: 495px;
+  margin-top: 10px;
+  text-align: left;
+  font-size: 16px;
+`;
+const ShowImg = styled.button`
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+  margin-left: 18px;
+`;
 
-export default input;
+const InputImg = styled.img``;
+
+export default InputFilld;
