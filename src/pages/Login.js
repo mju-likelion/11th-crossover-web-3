@@ -26,7 +26,6 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 230px;
-  position: absolute;
 `
 const Title = styled.div`
   width: 150px;
@@ -50,7 +49,6 @@ const SignUp = styled.p`
   font-weight: 600;
   margin-left: auto;
   margin-right: 15px;
-  position: relative;
   align-self: flex-end;
 `
 
