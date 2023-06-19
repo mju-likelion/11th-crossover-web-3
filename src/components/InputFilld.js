@@ -6,8 +6,6 @@ import { useState } from "react";
 
 const InputFilld = ({ helperText, placeholderText, isVaild, isError }) => {
   const [inputWrite, setinputWrite] = useState("");
-  // const [inputError, setinputError] = useState(true);
-  // const [inputState, setinputState] = useState(true);
 
   const displayText = (e) => {
     setinputWrite(e.target.value);
@@ -16,13 +14,6 @@ const InputFilld = ({ helperText, placeholderText, isVaild, isError }) => {
   const onReset = (e) => {
     setinputWrite("");
   };
-
-  // {
-  //   placeholderText = "text filld";
-  //   helperText = "helperText";
-  //   isVaild = true;   //유효성검사 성공
-  //   isError = false;  //에러
-  // }
 
   return (
     <>
@@ -37,15 +28,15 @@ const InputFilld = ({ helperText, placeholderText, isVaild, isError }) => {
           />
           <ShowImg>
             {isVaild ? (
-              <InputImg src={SUCCESS_ICON} />
+              <img src={SUCCESS_ICON} alt="success" />
             ) : isError ? (
-              <InputImg src={ERROR_ICON} />
+              <img src={ERROR_ICON} alt="error" />
             ) : (
               ""
             )}
           </ShowImg>
           <CancelBtn onClick={onReset}>
-            {inputWrite ? <img src={CANCEL_ICON} /> : ""}
+            {inputWrite ? <img src={CANCEL_ICON} alt="cancel" /> : ""}
           </CancelBtn>
         </InputBox>
         <HelperTextBox
@@ -75,14 +66,12 @@ const InputBox = styled.div`
         ? theme.colors.RED
         : theme.colors.GRAY};
 `;
-
 const InputContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 `;
-
 const InputStyle = styled.input`
   display: flex;
   width: 393px;
@@ -90,22 +79,16 @@ const InputStyle = styled.input`
   border: none;
   font-size: 20px;
   color: ${({ isVaild, isError, theme }) =>
-    isVaild
-      ? theme.colors.GREEN
-      : isError
-      ? theme.colors.RED
-      : theme.colors.GRAY};
+    isVaild ? theme.colors.GREEN : isError ? theme.colors.RED : "black"};
   &::placeholder {
     font-size: 20px;
     color: rgba(0, 0, 0, 0.45);
   }
 `;
-
 const CancelBtn = styled.button`
   width: 32px;
   height: 32px;
 `;
-
 const HelperTextBox = styled.p`
   height: 19px;
   width: 495px;
@@ -122,10 +105,6 @@ const HelperTextBox = styled.p`
 const ShowImg = styled.button`
   width: 32px;
   height: 32px;
-  margin-right: 8px;
-  margin-left: 18px;
+  margin: 0 8px 0 18px;
 `;
-
-const InputImg = styled.img``;
-
 export default InputFilld;
