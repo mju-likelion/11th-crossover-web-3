@@ -36,7 +36,7 @@ const InputFilld = ({ helperText, placeholderText, isVaild, isError }) => {
             )}
           </ShowImg>
           <CancelBtn onClick={onReset}>
-            {inputWrite ? <img src={CANCEL_ICON} alt="cancel" /> : ""}
+            {inputWrite && <img src={CANCEL_ICON} alt="cancel" />}
           </CancelBtn>
         </InputBox>
         <HelperTextBox
@@ -67,6 +67,7 @@ const InputBox = styled.div`
         : theme.colors.GRAY};
 `;
 const InputContainer = styled.div`
+  width: 1920px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -95,6 +96,7 @@ const HelperTextBox = styled.p`
   margin-top: 10px;
   text-align: left;
   font-size: 16px;
+  margin-bottom: 21px;
   color: ${({ isVaild, isError, theme }) =>
     isVaild
       ? theme.colors.GREEN
