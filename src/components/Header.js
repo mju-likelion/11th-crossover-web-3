@@ -10,8 +10,12 @@ const Header = ({isLoggedIn, toggle}) => {
 
     return (
         <Container>
-            <Logo src={logo} alt="logo" onClick={()=>navigate("/")}/>
-            <Logout src={logoutIcon} alt="logout" isLoggedIn={isLoggedIn} onClick={toggle} />
+            <LogoBtn onClick={()=>navigate("/")}>
+                <img src={logo} alt="logo" />
+            </LogoBtn>
+            <LogoutBtn isLoggedIn={isLoggedIn} onClick={toggle}>
+                <img src={logoutIcon} alt="logout" />
+            </LogoutBtn>
         </Container>
     );
 };
@@ -27,11 +31,12 @@ const Container = styled.div`
   top: 0;
   border-bottom: ${({theme}) => `1px solid ${theme.colors.GRAY}`};
 `
-const Logo = styled.img`
+const LogoBtn = styled.button`
+  width: 195px;
   margin-left: 363px;
   height: 38px;
 `
-const Logout = styled.img`
+const LogoutBtn = styled.button`
   visibility: ${({isLoggedIn}) => isLoggedIn ? `visible` : `hidden`};
   margin-right: 366px;
 `

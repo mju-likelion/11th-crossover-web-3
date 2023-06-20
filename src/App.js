@@ -22,11 +22,8 @@ function App() {
                 <BrowserRouter>
                     <Header isLoggedIn={isLoggedIn} toggle={toggle}/>
                     <Routes>
-                        {isLoggedIn ?
-                            <Route path={"/write"} element={<Post/>}/>
-                            :
-                            <Route index path={"/login"} element={<Login/>}/>
-                        }
+                        <Route path={"/write"} element={<Post/>}/>
+                        <Route path={"/login"} element={<Login/>}/>
                     </Routes>
                 </BrowserRouter>
             </ThemeProvider>

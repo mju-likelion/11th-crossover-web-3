@@ -2,8 +2,8 @@ import styled from "styled-components";
 import {useEffect, useState} from "react";
 import ShortBtn from "../components/ShortBtn";
 
-const MAX_Title = 20;
-const MAX_Content = 140;
+const MAX_TITLE = 20;
+const MAX_CONTENT = 140;
 
 
 const Post = () => {
@@ -11,13 +11,13 @@ const Post = () => {
     const [content, setContent] = useState("")
     const [isAble, setIsAble] = useState(false)
     const onChangeTitle = (e) => {
-        setTitle((e.target.value).slice(0, MAX_Title))
+        setTitle((e.target.value).slice(0, MAX_TITLE))
     }
     const onChangeContent = (e) => {
-        setContent((e.target.value).slice(0, MAX_Content))
+        setContent((e.target.value).slice(0, MAX_CONTENT))
     }
     useEffect(()=> {
-        (title !== "" && content !== "") ? setIsAble(true) : setIsAble(false)
+        setIsAble((title !== "" && content !== ""))
     }, [title, content])
 
 
@@ -28,13 +28,13 @@ const Post = () => {
                     <TitleEl>
                         <Title>제목 :</Title>
                         <TitleInput value={title} onChange={onChangeTitle}/>
-                        <TextLimit>( {title.length} / {MAX_Title} )</TextLimit>
+                        <TextLimit>( {title.length} / {MAX_TITLE} )</TextLimit>
                     </TitleEl>
                 </InputBox>
                 <InputBox height={"751px"}>
                     <TextArea value={content} onChange={onChangeContent}/>
                     <PostLimit>
-                        <TextLimit>( {content.length} / {MAX_Content} )</TextLimit>
+                        <TextLimit>( {content.length} / {MAX_CONTENT} )</TextLimit>
                     </PostLimit>
                 </InputBox>
                 <Notice>
