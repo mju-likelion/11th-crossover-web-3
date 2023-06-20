@@ -58,7 +58,7 @@ const InputBox = styled.div`
   width: 540px;
   height: 90px;
   border-radius: 25px;
-  border: 1px solid
+  border: 2px solid
     ${({ isVaild, isError, theme }) =>
       isVaild
         ? theme.colors.GREEN

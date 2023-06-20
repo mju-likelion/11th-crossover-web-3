@@ -1,23 +1,50 @@
 import styled from "styled-components";
+import {useEffect, useState} from "react";
+import ShortBtn from "../components/ShortBtn";
+
+const MAX_Title = 20;
+const MAX_Content = 140;
 
 
 const Post = () => {
+    const [title, setTitle] = useState("")
+    const [content, setContent] = useState("")
+    const [isAble, setIsAble] = useState(false)
+    const onChangeTitle = (e) => {
+        setTitle((e.target.value).slice(0, MAX_Title))
+    }
+    const onChangeContent = (e) => {
+        setContent((e.target.value).slice(0, MAX_Content))
+    }
+    useEffect(()=> {
+        (title !== "" && content !== "") ? setIsAble(true) : setIsAble(false)
+    }, [title, content])
+
+
     return (
-        <Container>
-            <InputBox height={"134px"}>
-                <TitleEl>
-                    <TitleTxt>제목 :</TitleTxt>
-                    <TitleInput />
-                    <TextLimit>(0/20)</TextLimit>
-                </TitleEl>
-            </InputBox>
-            <InputBox height={"751px"}>
-                <TextArea />
-                <PostLimit>
-                    <TextLimit>(0/140)</TextLimit>
-                </PostLimit>
-            </InputBox>
-        </Container>
+        <>
+            <Container>
+                <InputBox height={"134px"}>
+                    <TitleEl>
+                        <Title>제목 :</Title>
+                        <TitleInput value={title} onChange={onChangeTitle}/>
+                        <TextLimit>( {title.length} / {MAX_Title} )</TextLimit>
+                    </TitleEl>
+                </InputBox>
+                <InputBox height={"751px"}>
+                    <TextArea value={content} onChange={onChangeContent}/>
+                    <PostLimit>
+                        <TextLimit>( {content.length} / {MAX_Content} )</TextLimit>
+                    </PostLimit>
+                </InputBox>
+                <Notice>
+                    ※ 작성된 게시글은 수정이 불가합니다.
+                </Notice>
+                <Button>
+                    <ShortBtn isAble={isAble} text={"작성하기"} type={"W"}/>
+                </Button>
+            </Container>
+        </>
     );
 };
 
@@ -26,7 +53,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 174px;
+  margin-top: 58px;
 `
 const InputBox = styled.div`
   width: 794px;
@@ -42,8 +69,8 @@ const TitleEl = styled.div`
   justify-content: space-between;
   align-items: center;
 `
-const TitleTxt = styled.div`
-    font-size: 24px;
+const Title = styled.div`
+  font-size: 24px;
   font-weight: 600;
 `
 const TitleInput = styled.input`
@@ -51,20 +78,33 @@ const TitleInput = styled.input`
   font-size: 24px;
   font-weight: 600;
   display: flex;
+  border: none;
+`
+const TextArea = styled.textarea`
+  width: 714px;
+  height: 627px;
+  border: none;
+  font-size: 20px;
+`
+const PostLimit = styled.div`
+  display: flex;
+  justify-content: end;
+  margin-top: -25px;
 `
 const TextLimit = styled.div`
   font-size: 20px;
   font-weight: 500;
   color: GRAY;
 `
-const TextArea = styled.textarea`
+const Notice = styled.div`
   width: 714px;
-  height: 627px;
+  margin-top: 16px;
+  font-size: 20px;
+  font-weight: 500;
+  color: GRAY;
 `
-const PostLimit = styled.div`
-  display: flex;
-  justify-content: end;
-  margin-top: -25px;
+const Button = styled.div`
+  margin-left: 497px;
 `
 
 export default Post;

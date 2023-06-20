@@ -1,14 +1,17 @@
 import styled from "styled-components";
 import logo from "../asset/images/icon_logo.svg"
 import logoutIcon from "../asset/images/icon_logout.svg"
+import {useNavigate} from "react-router-dom";
 
 
-const Header = ({isLoggedIn}) => {
+const Header = ({isLoggedIn, toggle}) => {
+    const navigate = useNavigate()
+
 
     return (
         <Container>
-            <Logo src={logo} alt="logo"/>
-            <Logout src={logoutIcon} alt="logout" isLoggedIn={isLoggedIn}/>
+            <Logo src={logo} alt="logo" onClick={()=>navigate("/")}/>
+            <Logout src={logoutIcon} alt="logout" isLoggedIn={isLoggedIn} onClick={toggle} />
         </Container>
     );
 };
@@ -21,7 +24,6 @@ const Container = styled.div`
   padding-bottom: 42px;
   display: flex;
   justify-content: space-between;
-  position: fixed;
   top: 0;
   border-bottom: ${({theme}) => `1px solid ${theme.colors.GRAY}`};
 `
