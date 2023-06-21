@@ -11,14 +11,13 @@ function App() {
     <div className="App">
       <ThemeProvider theme={Theme}>
         <GlobalStyle />
-        {/* <BrowserRouter>
+        <BrowserRouter>
           <Header isLoggedIn={false} />
           <Routes>
             <Route index path={"/login"} element={<Login />} />
             <Route index path={"/Join"} element={<Join />} />
           </Routes>
-        </BrowserRouter> */}
-        <Join />
+        </BrowserRouter>
       </ThemeProvider>
     </div>
   );
