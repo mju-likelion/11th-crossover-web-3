@@ -5,7 +5,7 @@ import Header from "./components/Header";
 import Login from "./pages/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Join from "./pages/Join";
-import Content from "./pages/Content";
+import Main from "./pages/Main";
 import Post from "./pages/Post";
 import { useState } from "react";
 
@@ -18,6 +18,7 @@ function App() {
           <Header isLoggedIn={false} />
           <Routes>
             <Route index path={"/login"} element={<Login />} />
+            <Route index path={"/main"} element={<Main />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
