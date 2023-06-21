@@ -2,27 +2,30 @@ import WriteBtn from "../components/ShortBtn";
 import { styled } from "styled-components";
 import PROFILE_ME from "../asset/images/icon_profile_me.svg";
 import PROFILE_DEFULAT from "../asset/images/icon_profile_default.svg";
-import data from "../asset/data/postData.json";
+import data from "../asset/data/PostDummyData.json";
 import { Link } from "react-router-dom";
+
+
 const Main = () => {
-  const isMe = true; //확인용입니다
+
+
   return (
     <>
       <ContentBox>
         <ContentWrap>
           <ContentHeader>
-            <Link to={`/post`}>
+            <Link to={`/write`}>
               <WriteBtn text="작성하기" isAble={true} type="W" />
             </Link>
           </ContentHeader>
           {data &&
             data.contents.map((item, idx) => {
               return (
-                <Link to={`/main/${idx}`}>
+                <Link to={`/${item.id}`} key={item.id}>
                   <ShowContent>
                     <ContentShow>
                       <img
-                        src={isMe ? PROFILE_ME : PROFILE_DEFULAT}
+                        src={item.mine ? PROFILE_ME : PROFILE_DEFULAT}
                         alt="profileImg"
                       />
                       <ShowBox>

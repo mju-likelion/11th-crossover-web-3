@@ -2,8 +2,8 @@ import styled from "styled-components";
 import {useEffect, useState} from "react";
 import ShortBtn from "../components/ShortBtn";
 
-const MAX_TITLE = 20;
-const MAX_CONTENT = 140;
+export const MAX_TITLE = 20;
+export const MAX_CONTENT = 140;
 
 
 const Post = () => {
@@ -81,10 +81,11 @@ const TitleInput = styled.input`
   border: none;
 `
 const TextArea = styled.textarea`
-  width: 714px;
-  height: 627px;
+  width: 100%;
+  height: 100%;
   border: none;
   font-size: 20px;
+  resize: none;
 `
 const PostLimit = styled.div`
   display: flex;
