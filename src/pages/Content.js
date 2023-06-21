@@ -1,29 +1,25 @@
-import React from 'react';
 import ShortBtn from "../components/ShortBtn";
 import styled from "styled-components";
-import DummmyData from "../asset/data/PostDummyData.json"
-import MAX_TITLE from "./Post";
-import MAX_CONTENT from "./Post";
+import DUMMY_DATA from "../asset/data/PostDummyData.json"
+import {MAX_TITLE} from "./Post";
+import {MAX_CONTENT} from "./Post";
 import {useParams} from "react-router-dom";
 
 
 const Content = () => {
     const {postId} = useParams()
-
-    const title = DummmyData.contents[postId-1].title;
-    const content = DummmyData.contents[postId-1].content;
-    const isMine = DummmyData.contents[postId-1].mine;
+    const {title,content,isMine} = DUMMY_DATA.contents[postId-1]
 
 
     return (
         <>
             <Container>
                 <InputBox height={"134px"}>
-                    <TitleEl>
-                        <TitleTxt>제목 :</TitleTxt>
+                    <TitleBox>
+                        <TitleLabel>제목 :</TitleLabel>
                         <Title>{title}</Title>
                         <TextLimit>( {title.length} / {MAX_TITLE} )</TextLimit>
-                    </TitleEl>
+                    </TitleBox>
                 </InputBox>
                 <InputBox height={"751px"}>
                     <TextArea>{content}</TextArea>
@@ -35,7 +31,7 @@ const Content = () => {
                     ※ 작성된 게시글은 수정이 불가합니다.
                 </Notice>
                 <Button isMine={isMine}>
-                    <ShortBtn text={"삭제하기"} type={"D"}/>
+                    <ShortBtn text={"삭제하기"} type={"delete"}/>
                 </Button>
             </Container>
         </>
@@ -52,22 +48,22 @@ const Container = styled.div`
 const InputBox = styled.div`
   width: 794px;
   height: ${(props) => props.height || "134px"};
-  border: 2px solid GRAY;
+  border: 2px solid ${({ theme }) => theme.colors.GRAY};
   border-radius: 25px;
   padding: 55px 52px 51px 35px;
   margin-bottom: 16px;
 `
-const TitleEl = styled.div`
+const TitleBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 `
-const TitleTxt = styled.div`
+const TitleLabel = styled.div`
   font-size: 24px;
   font-weight: 600;
 `
-const Title = styled.div`
+const Title = styled.h2`
   width: 561px;
   font-size: 24px;
   font-weight: 600;
