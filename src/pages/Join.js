@@ -76,7 +76,8 @@ const Join = () => {
 
   const checkId = (e) => {
     setId(e.target.value);
-    const idRegex = /^[A-Za-z0-9]{5,10}$/;
+    const idRegex = /^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z0-9]{5,10}$/;
+
     if (idRegex.test(e.target.value)) {
       setIdMsg("사용 가능한 아이디 입니다.");
       setIdValid(true);
