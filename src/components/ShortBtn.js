@@ -15,7 +15,7 @@ const ButtonStyle = styled.button`
   width: 233px;
   height: 70px;
   border-radius: 25px;
-  background-color: ${({isAble, theme, type}) => type==="D" ? "#717171" : ((isAble && type==="W") ? "#2186FC" : theme.colors.BLUE1)};
+  background-color: ${({isAble, theme, type}) => type==="delete" ? "#717171" : ((isAble && type==="write") ? "#2186FC" : theme.colors.BLUE1)};
   font-size: 21px;
   font-weight: 600;
   color: white;

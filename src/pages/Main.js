@@ -15,11 +15,11 @@ const Main = () => {
         <ContentWrap>
           <ContentHeader>
             <Link to={`/write`}>
-              <WriteBtn text="작성하기" isAble={true} type="W" />
+              <WriteBtn text="작성하기" isAble={true} type="write" />
             </Link>
           </ContentHeader>
           {data &&
-            data.contents.map((item, idx) => {
+            data.contents.map((item, index) => {
               return (
                 <Link to={`/${item.id}`} key={item.id}>
                   <ShowContent>
