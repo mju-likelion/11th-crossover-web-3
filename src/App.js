@@ -6,6 +6,8 @@ import Login from "./pages/Login";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Join from "./pages/Join";
 import Content from "./pages/Content";
+import Post from "./pages/Post";
+import { useState } from "react";
 
 function App() {
   return (
@@ -16,8 +18,6 @@ function App() {
           <Header isLoggedIn={false} />
           <Routes>
             <Route index path={"/login"} element={<Login />} />
-            <Route index path={"/join"} element={<Join />} />
-            <Route index path={"/content"} element={<Content />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
