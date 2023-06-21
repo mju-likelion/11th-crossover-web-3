@@ -1,0 +1,39 @@
+{
+    "users": [
+      {
+        "id": 1,
+        "name": "John Doe",
+        "email": "john.doe@example.com",
+        "age": 28
+      },
+      {
+        "id": 2,
+        "name": "Jane Smith",
+        "email": "jane.smith@example.com",
+        "age": 32
+      },
+      {
+        "id": 3,
+        "name": "Bob Johnson",
+        "email": "bob.johnson@example.com",
+        "age": 45
+      }
+    ],
+    "contents": [
+      {
+        "title": 1,
+        "content": "게시글 1",
+        "time": "18:30"
+      },
+      {
+        "title": 2,
+        "content": "게시글 2",
+        "time": "18:30"
+      },
+      {
+        "title": 3,
+        "content": "게시글 3",
+        "time": "18:30"
+      }
+    ]
+  }
