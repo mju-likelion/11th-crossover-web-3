@@ -2,13 +2,17 @@ import React from 'react';
 import ShortBtn from "../components/ShortBtn";
 import styled from "styled-components";
 import DummmyData from "../asset/data/PostDummyData.json"
-import {MAX_TITLE} from "./Post";
-import {MAX_CONTENT} from "./Post";
+import MAX_TITLE from "./Post";
+import MAX_CONTENT from "./Post";
+import {useParams} from "react-router-dom";
 
 
-const Content = ({PostId, isMine}) => {
-    const title = DummmyData.contents[PostId].title;
-    const content = DummmyData.contents[PostId].content;
+const Content = () => {
+    const {postId} = useParams()
+
+    const title = DummmyData.contents[postId-1].title;
+    const content = DummmyData.contents[postId-1].content;
+    const isMine = DummmyData.contents[postId-1].mine;
 
 
     return (
@@ -16,13 +20,13 @@ const Content = ({PostId, isMine}) => {
             <Container>
                 <InputBox height={"134px"}>
                     <TitleEl>
-                        <Title>제목 :</Title>
-                        <TitleInput defaultValue={title}/>
+                        <TitleTxt>제목 :</TitleTxt>
+                        <Title>{title}</Title>
                         <TextLimit>( {title.length} / {MAX_TITLE} )</TextLimit>
                     </TitleEl>
                 </InputBox>
                 <InputBox height={"751px"}>
-                    <TextArea defaultValue={content}/>
+                    <TextArea>{content}</TextArea>
                     <PostLimit>
                         <TextLimit>( {content.length} / {MAX_CONTENT} )</TextLimit>
                     </PostLimit>
@@ -59,23 +63,22 @@ const TitleEl = styled.div`
   justify-content: space-between;
   align-items: center;
 `
-const Title = styled.div`
+const TitleTxt = styled.div`
   font-size: 24px;
   font-weight: 600;
 `
-const TitleInput = styled.input`
+const Title = styled.div`
   width: 561px;
   font-size: 24px;
   font-weight: 600;
   display: flex;
   border: none;
 `
-const TextArea = styled.textarea`
+const TextArea = styled.div`
   width: 100%;
   height: 100%;
   border: none;
   font-size: 20px;
-  resize: none;
 `
 const PostLimit = styled.div`
   display: flex;

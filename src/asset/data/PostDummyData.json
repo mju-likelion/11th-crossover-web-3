@@ -1,16 +1,22 @@
 {
   "contents": [
     {
+      "id": "1",
       "title": "게시글 1 제목",
-      "content": "게시글 1 내용"
+      "content": "게시글 1 내용",
+      "mine": true
     },
     {
+      "id": "2",
       "title": "게시글 2 제목",
-      "content": "게시글 2 내용"
+      "content": "게시글 2 내용",
+      "mine": false
     },
     {
+      "id": "3",
       "title": "게시글 3 제목",
-      "content": "게시글 3 내용"
+      "content": "게시글 3 내용",
+      "mine": true
     }
   ]
 }

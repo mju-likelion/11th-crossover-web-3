@@ -4,6 +4,8 @@ import {Theme} from "./styles/Theme";
 import Header from "./components/Header";
 import Login from "./pages/Login";
 import {BrowserRouter, Routes, Route} from "react-router-dom";
+import Join from "./pages/Join";
+import Main from "./pages/Main";
 import Post from "./pages/Post";
 import {useState} from "react";
 import Content from "./pages/Content";
@@ -23,10 +25,11 @@ function App() {
                 <BrowserRouter>
                     <Header isLoggedIn={isLoggedIn} toggle={toggle}/>
                     <Routes>
+                        <Route index path={"/"} element={<Main/>}/>
                         <Route path={"/write"} element={<Post/>}/>
                         <Route path={"/login"} element={<Login/>}/>
-                        <Route path={"/post"} element={<Content PostId={1} isMine={true}/>}/>
-                        {/*게시글 리스트 보이는 MainPage 미완성으로 임시로 props 넘겼습니다*/}
+                        <Route path={"/join"} element={<Join/>}/>
+                        <Route path={"/:postId"} element={<Content/>}/>
                     </Routes>
                 </BrowserRouter>
             </ThemeProvider>
