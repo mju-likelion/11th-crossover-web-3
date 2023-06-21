@@ -21,7 +21,10 @@ const Content = () => {
                 <Link to={`/content/${idx}`}>
                   <ShowContent>
                     <ContentShow>
-                      <img src={isMe ? PROFILE_ME : PROFILE_DEFULAT} />
+                      <img
+                        src={isMe ? PROFILE_ME : PROFILE_DEFULAT}
+                        alt="profileImg"
+                      />
                       <ShowBox>
                         <ContentName>{item.title}</ContentName>
                         <ContentText>{item.content}</ContentText>
@@ -65,8 +68,8 @@ const ContentShow = styled.div`
   border-radius: 25px;
 
   img {
-    height: 56.8px;
-    width: 56.8px;
+    height: 62px;
+    width: 62px;
   }
   border: 2px solid ${({ theme }) => theme.colors.GRAY};
 `;
@@ -77,7 +80,7 @@ const ShowBox = styled.div`
 const ContentName = styled.div`
   font-size: 24px;
   font-weight: 700;
-  margin-left: 41.6px;
+  margin-left: 39px;
 `;
 
 const ContentText = styled.div`
