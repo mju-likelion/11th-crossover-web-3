@@ -5,10 +5,7 @@ import PROFILE_DEFULAT from "../asset/images/icon_profile_default.svg";
 import data from "../asset/data/PostDummyData.json";
 import { Link } from "react-router-dom";
 
-
 const Main = () => {
-
-
   return (
     <>
       <ContentBox>

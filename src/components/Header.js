@@ -17,6 +17,7 @@ const Header = ({ isLoggedIn, toggle }) => {
     </Container>
   );
 };
+
 const Container = styled.div`
   width: 1920px;
   height: 116px;
@@ -34,7 +35,7 @@ const LogoBtn = styled.button`
 `;
 const LogoutBtn = styled.button`
   visibility: ${({ isLoggedIn }) => (isLoggedIn ? `visible` : `hidden`)};
-  margin-right: 366px;
+  margin-right: 365px;
 `;
 
 export default Header;

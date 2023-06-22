@@ -1,33 +1,34 @@
-import styled from "styled-components";
 import CANCEL_ICON from "../asset/images/icon_cancel.svg";
 import ERROR_ICON from "../asset/images/icon_error.svg";
 import SUCCESS_ICON from "../asset/images/icon_success.svg";
-import { useState } from "react";
+import styled from "styled-components";
 
-const InputFilld = ({ helperText, placeholderText, isVaild, isError }) => {
-  const [inputWrite, setinputWrite] = useState("");
-
-  const displayText = (e) => {
-    setinputWrite(e.target.value);
-  };
-
-  const onReset = (e) => {
-    setinputWrite("");
-  };
-
+const InputFilld = ({
+  helperText,
+  placeholderText,
+  isValid,
+  isError,
+  onChange,
+  onClick,
+  checkHandler,
+  value,
+}) => {
   return (
     <>
       <InputContainer>
-        <InputBox isVaild={isVaild} isError={isError}>
+        <InputBox isValid={isValid} isError={isError}>
           <InputStyle
-            onChange={displayText}
-            value={inputWrite}
+            onChange={(e) => {
+              checkHandler(e);
+              onChange(e);
+            }}
+            value={value}
             placeholder={placeholderText}
-            isVaild={isVaild}
+            isValid={isValid}
             isError={isError}
           />
           <ShowImg>
-            {isVaild ? (
+            {isValid ? (
               <img src={SUCCESS_ICON} alt="success" />
             ) : isError ? (
               <img src={ERROR_ICON} alt="error" />
@@ -35,13 +36,17 @@ const InputFilld = ({ helperText, placeholderText, isVaild, isError }) => {
               ""
             )}
           </ShowImg>
-          <CancelBtn onClick={onReset}>
-            {inputWrite ? <img src={CANCEL_ICON} alt="cancel" /> : ""}
+          <CancelBtn
+            onClick={(e) => {
+              onClick(e);
+            }}
+          >
+            {value === "" || <img src={CANCEL_ICON} alt="cancel" />}
           </CancelBtn>
         </InputBox>
         <HelperTextBox
           helperText={helperText}
-          isVaild={isVaild}
+          isValid={isValid}
           isError={isError}
         >
           {helperText}
@@ -67,6 +72,7 @@ const InputBox = styled.div`
         : theme.colors.GRAY};
 `;
 const InputContainer = styled.div`
+  width: 1920px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -78,8 +84,8 @@ const InputStyle = styled.input`
   height: 28px;
   border: none;
   font-size: 20px;
-  color: ${({ isVaild, isError, theme }) =>
-    isVaild ? theme.colors.GREEN : isError ? theme.colors.RED : "black"};
+  color: ${({ isValid, isError, theme }) =>
+    isValid ? theme.colors.GREEN : isError ? theme.colors.RED : "black"};
   &::placeholder {
     font-size: 20px;
     color: rgba(0, 0, 0, 0.45);
@@ -95,14 +101,15 @@ const HelperTextBox = styled.p`
   margin-top: 10px;
   text-align: left;
   font-size: 16px;
-  color: ${({ isVaild, isError, theme }) =>
-    isVaild
+  margin-bottom: 21px;
+  color: ${({ isValid, isError, theme }) =>
+    isValid
       ? theme.colors.GREEN
       : isError
       ? theme.colors.RED
       : theme.colors.GRAY};
 `;
-const ShowImg = styled.button`
+const ShowImg = styled.image`
   width: 32px;
   height: 32px;
   margin: 0 8px 0 18px;
