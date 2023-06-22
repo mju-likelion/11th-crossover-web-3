@@ -35,7 +35,7 @@ const LogoBtn = styled.button`
 `;
 const LogoutBtn = styled.button`
   visibility: ${({ isLoggedIn }) => (isLoggedIn ? `visible` : `hidden`)};
-  margin-right: 366px;
+  margin-right: 365px;
 `;
 
 export default Header;
