@@ -72,7 +72,6 @@ const InputBox = styled.div`
         : theme.colors.GRAY};
 `;
 const InputContainer = styled.div`
-  width: 1920px;
   display: flex;
   justify-content: center;
   align-items: center;

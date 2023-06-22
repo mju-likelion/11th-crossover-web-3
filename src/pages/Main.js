@@ -1,44 +1,46 @@
 import WriteBtn from "../components/ShortBtn";
-import { styled } from "styled-components";
+import styled from "styled-components";
 import PROFILE_ME from "../asset/images/icon_profile_me.svg";
 import PROFILE_DEFULAT from "../asset/images/icon_profile_default.svg";
 import data from "../asset/data/PostDummyData.json";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 
 const Main = () => {
-  return (
-    <>
-      <ContentBox>
-        <ContentWrap>
-          <ContentHeader>
-            <Link to={`/write`}>
-              <WriteBtn text="작성하기" isAble={true} type="write" />
-            </Link>
-          </ContentHeader>
-          {data &&
-            data.contents.map((item, index) => {
-              return (
-                <Link to={`/${item.id}`} key={item.id}>
-                  <ShowContent>
-                    <ContentShow>
-                      <img
-                        src={item.mine ? PROFILE_ME : PROFILE_DEFULAT}
-                        alt="profileImg"
-                      />
-                      <ShowBox>
-                        <ContentName>{item.title}</ContentName>
-                        <ContentText>{item.content}</ContentText>
-                      </ShowBox>
-                      <TimeShow>{item.time}</TimeShow>
-                    </ContentShow>
-                  </ShowContent>
-                </Link>
-              );
-            })}
-        </ContentWrap>
-      </ContentBox>
-    </>
-  );
+
+
+    return (
+        <>
+            <ContentBox>
+                <ContentWrap>
+                    <ContentHeader>
+                        <Link to={`/write`}>
+                            <WriteBtn text="작성하기" isAble={true} type={"write"}/>
+                        </Link>
+                    </ContentHeader>
+                    {data &&
+                        data.contents.map((item, index) => {
+                            return (
+                                <Link to={`/${item.id}`} key={item.id}>
+                                    <ShowContent>
+                                        <ContentShow>
+                                            <img
+                                                src={item.isMine ? PROFILE_ME : PROFILE_DEFULAT}
+                                                alt="profileImg"
+                                            />
+                                            <ShowBox>
+                                                <ContentName>{item.title}</ContentName>
+                                                <ContentText>{item.content}</ContentText>
+                                            </ShowBox>
+                                            <TimeShow>{item.time}</TimeShow>
+                                        </ContentShow>
+                                    </ShowContent>
+                                </Link>
+                            );
+                        })}
+                </ContentWrap>
+            </ContentBox>
+        </>
+    );
 };
 
 const ContentBox = styled.div`
@@ -71,7 +73,8 @@ const ContentShow = styled.div`
     height: 62px;
     width: 62px;
   }
-  border: 2px solid ${({ theme }) => theme.colors.GRAY};
+
+  border: 2px solid ${({theme}) => theme.colors.GRAY};
 `;
 const ShowBox = styled.div`
   width: 598px;
@@ -91,13 +94,13 @@ const ContentText = styled.div`
   padding: 20px 26px;
   font-size: 20px;
   font-weight: 600;
-  border: 2px solid ${({ theme }) => theme.colors.BLUE1};
+  border: 2px solid ${({theme}) => theme.colors.BLUE1};
 `;
 
 const TimeShow = styled.div`
   font-size: 20px;
   align-self: flex-end;
   padding-top: 13px;
-  color: ${({ theme }) => theme.colors.GRAY};
+  color: ${({theme}) => theme.colors.GRAY};
 `;
 export default Main;
