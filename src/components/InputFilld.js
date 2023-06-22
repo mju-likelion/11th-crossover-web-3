@@ -28,9 +28,13 @@ const InputFilld = ({
             isError={isError}
           />
           <ShowImg>
-            {isValid && <img src={SUCCESS_ICON} alt="success" />}
-            {isError && <img src={ERROR_ICON} alt="error" />}
-            {value === "" && ""}
+            {isValid ? (
+              <img src={SUCCESS_ICON} alt="success" />
+            ) : isError ? (
+              <img src={ERROR_ICON} alt="error" />
+            ) : (
+              value === "" && ""
+            )}
           </ShowImg>
           <CancelBtn
             onClick={(e) => {
