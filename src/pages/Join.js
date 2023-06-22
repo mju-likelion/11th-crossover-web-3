@@ -184,8 +184,6 @@ const Join = () => {
 };
 
 const JoinBox = styled.div`
-  width: 1920px;
-  height: 1404px;
   display: flex;
   justify-content: center;
 `;
