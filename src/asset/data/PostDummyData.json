@@ -4,19 +4,22 @@
       "id": "1",
       "title": "게시글 1 제목",
       "content": "게시글 1 내용",
-      "isMine": true
+      "isMine": true,
+      "time": "18:30"
     },
     {
       "id": "2",
       "title": "게시글 2 제목",
       "content": "게시글 2 내용",
-      "isMine": false
+      "isMine": false,
+      "time": "18:30"
     },
     {
       "id": "3",
       "title": "게시글 3 제목",
       "content": "게시글 3 내용",
-      "isMine": true
+      "isMine": true,
+      "time": "18:30"
     }
   ]
 }
