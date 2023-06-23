@@ -41,7 +41,7 @@ const Post = () => {
                     ※ 작성된 게시글은 수정이 불가합니다.
                 </Notice>
                 <Button>
-                    <ShortBtn isAble={isAble} text={"작성하기"} type={"W"}/>
+                    <ShortBtn isAble={isAble} text={"작성하기"} type={"write"}/>
                 </Button>
             </Container>
         </>

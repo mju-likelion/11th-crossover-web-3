@@ -1,23 +1,29 @@
-import CANCEL_ICON from "../asset/images/icon_cancel.svg";
-import ERROR_ICON from "../asset/images/icon_error.svg";
-import styled from "styled-components";
-import {useEffect, useState} from "react";
+import CANCEL_ICON from '../asset/images/icon_cancel.svg';
+import ERROR_ICON from '../asset/images/icon_error.svg';
+import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
-
-const Input = ({placeholder, isError, type, register, errors, value, setValue}) => {
-    const [isEmpty, setIsEmpty] = useState(true)
-
+const Input = ({
+                   placeholder,
+                   type,
+                   register,
+                   errors,
+                   value,
+                   setValue,
+                   name,
+               }) => {
+    const [isEmpty, setIsEmpty] = useState(true);
+    const [isError, setError] = useState(false);
 
     const onClick = () => {
-        setValue("")
-    }
+        setValue(name, '');
+    };
     useEffect(() => {
-        setIsEmpty(value === "");
-    }, [value]);
-
-    const onChange = (e) => {
-        setValue(e.target.value)
-    }
+        setIsEmpty(value[name] === '');
+    }, [value, name]);
+    useEffect(() => {
+        setError(errors?.message.length > 1);
+    }, [errors?.message]);
 
     return (
         <InputContainer>
@@ -26,32 +32,24 @@ const Input = ({placeholder, isError, type, register, errors, value, setValue}) 
                     placeholder={placeholder}
                     isEmpty={isEmpty}
                     isError={isError}
-                    type={type} {...register}
-                    value={value}
-                    onChange={onChange}
+                    type={type}
+                    value={value[name]}
+                    {...register(name)}
                 />
-
-                <ShowImg isEmpty={isEmpty}>
-                    {isEmpty ? null : <img src={ERROR_ICON} alt="error" />}
+                <ShowImg isEmpty={isEmpty} isError={isError}>
+                    {!isEmpty && isError ? <img src={ERROR_ICON} alt='error' /> : null}
                 </ShowImg>
-
                 <CancelBtn onClick={onClick}>
-                    {value === "" ? null : <img src={CANCEL_ICON} alt="cancel"/>}
+                    {value[name] === '' ? null : <img src={CANCEL_ICON} alt='cancel' />}
                 </CancelBtn>
             </InputBox>
 
-            <HelperTextBox
-                isError={isError}
-                isEmpty={isEmpty}
-                value={value}
-            >
+            <HelperTextBox isError={isError} isEmpty={isEmpty} value={value}>
                 {errors && errors.message}
-
             </HelperTextBox>
         </InputContainer>
     );
 };
-
 
 const InputBox = styled.div`
   display: flex;
@@ -60,14 +58,14 @@ const InputBox = styled.div`
   width: 540px;
   height: 90px;
   border-radius: 25px;
-
-  //todo  유효성 검사 결과 
-
-  border: 2px solid ${({isEmpty, isError, theme}) =>
-          isEmpty ? theme.colors.GRAY : (isError ? theme.colors.RED : theme.colors.GRAY)};
+  border: 2px solid
+  ${({ isEmpty, isError, theme }) =>
+      isEmpty
+          ? theme.colors.GRAY
+          : isError
+              ? theme.colors.RED
+              : theme.colors.GRAY};
 `;
-
-
 
 const InputContainer = styled.div`
   display: flex;
@@ -81,8 +79,12 @@ const InputStyle = styled.input`
   height: 28px;
   border: none;
   font-size: 20px;
-  color: ${({isEmpty, isError, theme}) =>
-  isEmpty ? theme.colors.GRAY : (isError ? theme.colors.RED : theme.colors.GRAY)};
+  color: ${({ isEmpty, isError, theme }) =>
+      isEmpty
+          ? theme.colors.GRAY
+          : isError
+              ? theme.colors.RED
+              : theme.colors.GRAY};
   background-color: transparent;
   &::placeholder {
     font-size: 20px;
@@ -100,24 +102,17 @@ const HelperTextBox = styled.p`
   text-align: left;
   font-size: 16px;
   margin-bottom: 21px;
-
-  visibility: ${({isEmpty}) => ((isEmpty) ? "visible" : "hidden")};
-
-  color: ${({isEmpty, isError, theme}) =>
-          isEmpty
-                  ? theme.colors.GRAY
-                  : isError
-                          ? theme.colors.RED
-                          : theme.colors.GREEN};
+  visibility: ${({ isEmpty }) => (!isEmpty ? 'visible' : 'hidden')};
+  color: ${({ isEmpty, isError, theme }) =>
+      isEmpty
+          ? theme.colors.GRAY
+          : isError
+              ? theme.colors.RED
+              : theme.colors.GREEN};
 `;
-const ShowImg = styled.image`
+const ShowImg = styled.div`
   width: 32px;
   height: 32px;
   margin: 0 8px 0 18px;
-  visibility: ${({isEmpty}) => (isEmpty ? "hidden" : "visible")};
-
 `;
 export default Input;
-
-
-
