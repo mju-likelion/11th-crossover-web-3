@@ -49,7 +49,7 @@ const Container = styled.div`
 const InputBox = styled.div`
   width: 794px;
   height: ${(props) => props.height || "134px"};
-  border: 2px solid ${({ theme }) => theme.colors.BLUE1};
+  border: 2px solid ${({ theme }) => theme.colors.GRAY};
   border-radius: 25px;
   padding: 55px 52px 51px 35px;
   margin-bottom: 16px;
