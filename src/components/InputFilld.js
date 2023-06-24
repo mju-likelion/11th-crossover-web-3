@@ -64,8 +64,8 @@ const InputBox = styled.div`
   height: 90px;
   border-radius: 25px;
   border: 2px solid
-    ${({ isVaild, isError, theme }) =>
-      isVaild
+    ${({ isValid, isError, theme }) =>
+      isValid
         ? theme.colors.GREEN
         : isError
         ? theme.colors.RED
