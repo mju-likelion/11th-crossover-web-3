@@ -1,8 +1,18 @@
 import {Axios} from  './Axios';
 
 
-export const AxiosLogin = (data, goMain) => {
+export const AxiosLogin = (data, loginToggle, goMain ) => {
 
+    const LoginSuccess = (accessToken) => {
+        window.localStorage.setItem("accessToken", JSON.stringify(accessToken))
+        const LocalAccessToken = JSON.parse(localStorage.getItem('accessToken'));
+
+        if (LocalAccessToken)
+        {
+            goMain()
+            loginToggle();
+        }
+    }
 
     Axios.post(`/api/auth/login`, {
         id: data.id,
@@ -10,12 +20,7 @@ export const AxiosLogin = (data, goMain) => {
     })
         .then((res) => {
             console.log(res.data)
-            window.localStorage.setItem("accessToken", JSON.stringify(res.data.accessToken))
-
-            goMain();
-
-            // console.log(res.data.accessToken)
-
+            LoginSuccess(res.data.accessToken)
         })
 
         .catch((error) => {

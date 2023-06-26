@@ -15,12 +15,19 @@ function App() {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    // const accessToken = JSON.parse(localStorage.getItem('accessToken'));
 
-    useEffect(() => {
-        const accessToken = JSON.parse(localStorage.getItem('accessToken'));
-        setIsLoggedIn(!!accessToken) //!! : boolean 으로 형변환 하는 방법
+    // useEffect(() => {
+    //     setIsLoggedIn(!!accessToken) //!! : boolean 으로 형변환 하는 방법
+    //     console.log(isLoggedIn)
+    // }, [accessToken])
+
+    const loginToggle = () => {
+        setIsLoggedIn(true)
+        console.log("loginToggle 실행됨")
         console.log(isLoggedIn)
-    }, [])
+
+    }
 
 
 
@@ -39,7 +46,7 @@ function App() {
                     <Routes>
                         <Route index path={"/"} element={<Main/>}/>
 
-                        <Route path={"/login"} element={<Login/>}/>
+                        <Route path={"/login"} element={<Login loginToggle={loginToggle}/>} />
                         <Route path={"/join"} element={<Join/>}/>
 
                         <Route path={"/write"} element={<Post/>}/>

@@ -29,7 +29,7 @@ const schema = yup.object().shape({
 });
 
 
-const Login = () => {
+const Login = ({loginToggle}) => {
     const [isAble, setIsAble] = useState(true);
     const {
         register,
@@ -44,7 +44,7 @@ const Login = () => {
     const navigate = useNavigate();
     const value = watch();
     const onSubmit = (data) => {
-        AxiosLogin(data, ()=>navigate("/"));
+        AxiosLogin(data, loginToggle, ()=>navigate("/"));
         console.log(data);
         setValue('id', '')
         setValue('password', '')
