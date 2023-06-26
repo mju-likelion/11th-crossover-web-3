@@ -3,7 +3,7 @@ import ERROR_ICON from '../asset/images/icon_error.svg';
 import styled from 'styled-components';
 import {useEffect, useState} from 'react';
 
-const Input = ({
+    const Input = ({
        value,
        setValue,
        placeholder,
@@ -12,7 +12,7 @@ const Input = ({
        valid,
        register,
        onKeyDown,
-}) => {
+    }) => {
     const [isEmpty, setIsEmpty] = useState(true);
     const [isValid, setIsValid] = useState(false);
 
@@ -62,11 +62,11 @@ const InputBox = styled.div`
   height: 90px;
   border-radius: 25px;
   border: 2px solid ${({isEmpty, isValid, theme}) =>
-          isEmpty
-                  ? theme.colors.GRAY
-                  : isValid
-                          ? theme.colors.RED
-                          : theme.colors.GRAY};
+      isEmpty
+          ? theme.colors.GRAY
+          : isValid
+              ? theme.colors.RED
+              : theme.colors.GRAY};
 `;
 
 const InputContainer = styled.div`
@@ -82,11 +82,11 @@ const InputStyle = styled.input`
   border: none;
   font-size: 20px;
   color: ${({isEmpty, isValid, theme}) =>
-          isEmpty
-                  ? theme.colors.GRAY
-                  : isValid
-                          ? theme.colors.RED
-                          : theme.colors.GRAY};
+      isEmpty
+          ? theme.colors.GRAY
+          : isValid
+              ? theme.colors.RED
+              : theme.colors.GRAY};
   background-color: transparent;
 
   &::placeholder {

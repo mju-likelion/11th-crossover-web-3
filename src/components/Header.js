@@ -8,14 +8,6 @@ const Header = ({ isLoggedIn, logout }) => {
   const navigate = useNavigate();
 
 
-  useEffect(()=> {
-      console.log(isLoggedIn)
-  }, [isLoggedIn])
-
-
-
-
-
   return (
     <Container>
       <LogoBtn onClick={() => navigate("/")}>

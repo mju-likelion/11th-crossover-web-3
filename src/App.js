@@ -9,33 +9,22 @@ import Main from "./pages/Main";
 import Post from "./pages/Post";
 import {useEffect, useState} from "react";
 import Content from "./pages/Content";
+import AuthRoute from "./pages/AuthRoute";
 
 
 function App() {
-
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    // const accessToken = JSON.parse(localStorage.getItem('accessToken'));
-
-    // useEffect(() => {
-    //     setIsLoggedIn(!!accessToken) //!! : boolean 으로 형변환 하는 방법
-    //     console.log(isLoggedIn)
-    // }, [accessToken])
-
+    const accessToken = JSON.parse(localStorage.getItem('accessToken'));
     const loginToggle = () => {
         setIsLoggedIn(true)
-        console.log("loginToggle 실행됨")
-        console.log(isLoggedIn)
-
     }
-
-
-
     const logout = () => {
         window.localStorage.removeItem('accessToken');
         setIsLoggedIn(false)
     };
-
+    useEffect(() => {
+        setIsLoggedIn(!!accessToken) //!! : boolean 으로 형변환 하는 방법
+    }, [accessToken])
 
     return (
         <div className="App">
@@ -44,11 +33,11 @@ function App() {
                 <BrowserRouter>
                     <Header isLoggedIn={isLoggedIn} logout={logout}/>
                     <Routes>
-                        <Route index path={"/"} element={<Main/>}/>
-
+                        <Route index path={"/"} element={
+                            <AuthRoute isLoggedIn={isLoggedIn} component={<Main />} />
+                        }/>
                         <Route path={"/login"} element={<Login loginToggle={loginToggle}/>} />
                         <Route path={"/join"} element={<Join/>}/>
-
                         <Route path={"/write"} element={<Post/>}/>
                         <Route path={"/:postId"} element={<Content/>}/>
                     </Routes>

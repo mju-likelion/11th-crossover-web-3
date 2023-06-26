@@ -48,6 +48,7 @@ const Login = ({loginToggle}) => {
         console.log(data);
         setValue('id', '')
         setValue('password', '')
+        document.getElementsByName("id")[0].focus();
     };
     useEffect(() => {
         setIsAble(value.id && value.password);
