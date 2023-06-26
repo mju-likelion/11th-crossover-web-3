@@ -1,19 +1,20 @@
 import CANCEL_ICON from '../asset/images/icon_cancel.svg';
 import ERROR_ICON from '../asset/images/icon_error.svg';
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import {useEffect, useState} from 'react';
 
 const Input = ({
-                   placeholder,
-                   type,
-                   register,
-                   errors,
-                   value,
-                   setValue,
-                   name,
-               }) => {
+       value,
+       setValue,
+       placeholder,
+       type,
+       name,
+       valid,
+       register,
+       onKeyDown,
+}) => {
     const [isEmpty, setIsEmpty] = useState(true);
-    const [isError, setError] = useState(false);
+    const [isValid, setIsValid] = useState(false);
 
     const onClick = () => {
         setValue(name, '');
@@ -22,30 +23,32 @@ const Input = ({
         setIsEmpty(value[name] === '');
     }, [value, name]);
     useEffect(() => {
-        setError(errors?.message.length > 1);
-    }, [errors?.message]);
+        setIsValid(valid?.message.length > 1);
+    }, [valid?.message]);
+
 
     return (
         <InputContainer>
-            <InputBox isEmpty={isEmpty} isError={isError}>
+            <InputBox isEmpty={isEmpty} isValid={isValid}>
                 <InputStyle
                     placeholder={placeholder}
                     isEmpty={isEmpty}
-                    isError={isError}
+                    isValid={isValid}
                     type={type}
                     value={value[name]}
                     {...register(name)}
+                    onKeyDown={onKeyDown}
                 />
-                <ShowImg isEmpty={isEmpty} isError={isError}>
-                    {!isEmpty && isError ? <img src={ERROR_ICON} alt='error' /> : null}
+                <ShowImg isEmpty={isEmpty} isValid={isValid}>
+                    {!isEmpty && isValid ? <img src={ERROR_ICON} alt='error'/> : null}
                 </ShowImg>
                 <CancelBtn onClick={onClick}>
-                    {value[name] === '' ? null : <img src={CANCEL_ICON} alt='cancel' />}
+                    {value[name] === '' ? null : <img src={CANCEL_ICON} alt='cancel'/>}
                 </CancelBtn>
             </InputBox>
 
-            <HelperTextBox isError={isError} isEmpty={isEmpty} value={value}>
-                {errors && errors.message}
+            <HelperTextBox isValid={isValid} isEmpty={isEmpty} value={value}>
+                {valid && valid.message}
             </HelperTextBox>
         </InputContainer>
     );
@@ -58,13 +61,12 @@ const InputBox = styled.div`
   width: 540px;
   height: 90px;
   border-radius: 25px;
-  border: 2px solid
-  ${({ isEmpty, isError, theme }) =>
-      isEmpty
-          ? theme.colors.GRAY
-          : isError
-              ? theme.colors.RED
-              : theme.colors.GRAY};
+  border: 2px solid ${({isEmpty, isValid, theme}) =>
+          isEmpty
+                  ? theme.colors.GRAY
+                  : isValid
+                          ? theme.colors.RED
+                          : theme.colors.GRAY};
 `;
 
 const InputContainer = styled.div`
@@ -79,13 +81,14 @@ const InputStyle = styled.input`
   height: 28px;
   border: none;
   font-size: 20px;
-  color: ${({ isEmpty, isError, theme }) =>
-      isEmpty
-          ? theme.colors.GRAY
-          : isError
-              ? theme.colors.RED
-              : theme.colors.GRAY};
+  color: ${({isEmpty, isValid, theme}) =>
+          isEmpty
+                  ? theme.colors.GRAY
+                  : isValid
+                          ? theme.colors.RED
+                          : theme.colors.GRAY};
   background-color: transparent;
+
   &::placeholder {
     font-size: 20px;
     color: rgba(0, 0, 0, 0.45);
@@ -102,13 +105,13 @@ const HelperTextBox = styled.p`
   text-align: left;
   font-size: 16px;
   margin-bottom: 21px;
-  visibility: ${({ isEmpty }) => (!isEmpty ? 'visible' : 'hidden')};
-  color: ${({ isEmpty, isError, theme }) =>
-      isEmpty
-          ? theme.colors.GRAY
-          : isError
-              ? theme.colors.RED
-              : theme.colors.GREEN};
+  visibility: ${({isEmpty}) => (!isEmpty ? 'visible' : 'hidden')};
+  color: ${({isEmpty, isValid, theme}) =>
+          isEmpty
+                  ? theme.colors.GRAY
+                  : isValid
+                          ? theme.colors.RED
+                          : theme.colors.GRAY};
 `;
 const ShowImg = styled.div`
   width: 32px;
