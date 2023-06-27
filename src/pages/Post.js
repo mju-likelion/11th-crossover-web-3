@@ -31,7 +31,7 @@ const Post = () => {
   const writeBoard = (e) => {
     e.preventDefault();
     setWriter(sessionStorage.getItem("id"));
-    AxiosWrite(writer, postData, callbackFunctions);
+    AxiosWrite(postData, callbackFunctions);
   };
 
   const callbackFunctions = {

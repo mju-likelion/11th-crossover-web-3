@@ -5,6 +5,8 @@ import AGREEBOX_FALSE from "../asset/images/icon_state_false.svg";
 import AGREEBOX_TRUE from "../asset/images/icon_state_true.svg";
 import { useState, useEffect } from "react";
 import { data } from "../asset/data/data";
+import { AxiosJoin } from "../api/Join";
+import { useNavigate } from "react-router-dom";
 import AgreeBtn from "../components/LongBtn";
 const Join = () => {
   const [imageSrc, setImageSrc] = useState(AGREEBOX_FALSE);
@@ -19,6 +21,7 @@ const Join = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [isAble, setIsAble] = useState(false);
+  const navigate = useNavigate();
   const helperMsg = {
     id: "영문과 숫자을 조합하여 5~10글자 미만으로 입력하여 주세요.",
     password:
@@ -30,7 +33,7 @@ const Join = () => {
   const [passwordMsg, setPasswordMsg] = useState(helperMsg.password);
   const [emailMsg, setEmailMsg] = useState(helperMsg.email);
 
-  const handleClick = () => {
+  const handleClick = (e) => {
     if (isClicked) {
       setImageSrc(AGREEBOX_FALSE);
       setIsClicked(false);
@@ -40,37 +43,36 @@ const Join = () => {
     }
   };
 
-  const IdReset = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
+    AxiosJoin(joinData, callbackFunctions);
+  };
+
+  const IdReset = (e) => {
     setId("");
     setIdValid(false);
     setIdError(false);
     setIdMsg(helperMsg.id);
   };
   const PasswordReset = (e) => {
-    e.preventDefault();
     setPassword("");
     setPasswordValid(false);
     setPasswordError(false);
     setPasswordMsg(helperMsg.password);
   };
   const EmailReset = (e) => {
-    e.preventDefault();
     setEmail("");
     setEmailValid(false);
     setEmailError(false);
     setEmailMsg(helperMsg.email);
   };
   const onChangeId = (e) => {
-    e.preventDefault();
     setId(e.target.value);
   };
   const onChangePassword = (e) => {
-    e.preventDefault();
     setPassword(e.target.value);
   };
   const onChangeEmail = (e) => {
-    e.preventDefault();
     setEmail(e.target.value);
   };
 
@@ -118,6 +120,16 @@ const Join = () => {
     }
   };
 
+  const joinData = {
+    id: id,
+    password: password,
+    email: email,
+  };
+
+  const callbackFunctions = {
+    navigateSuccess: () => navigate("/login"),
+  };
+
   useEffect(() => {
     setIsAble(id !== "" && password !== "" && email !== "" && isClicked);
   }, [id, password, email, isClicked]);
@@ -125,7 +137,7 @@ const Join = () => {
   return (
     <>
       <JoinBox>
-        <JoinWrap>
+        <JoinWrap onSubmit={onSubmit}>
           <JoinTopBox>
             <TopText>회원가입</TopText>
             <InputFilld
@@ -168,7 +180,7 @@ const Join = () => {
                 [필수]
               </AgreeTextFirst>
               <AgreeTextSec>개인정보보호정책</AgreeTextSec>
-              <AgreeCheckBtn onClick={handleClick}>
+              <AgreeCheckBtn type="button" onClick={handleClick}>
                 <img src={imageSrc} alt="agreeCheck" />
               </AgreeCheckBtn>
             </AgreeHeader>
@@ -176,7 +188,7 @@ const Join = () => {
               <Agreement>{data}</Agreement>
             </AgreeFilld>
           </AgreeBox>
-          <AgreeBtn text="완료하기" isAble={isAble} />
+          <AgreeBtn text="완료하기" isAble={isAble} type="submit" />
         </JoinWrap>
       </JoinBox>
     </>
@@ -187,13 +199,13 @@ const JoinBox = styled.div`
   display: flex;
   justify-content: center;
 `;
-const JoinWrap = styled.div`
+const JoinWrap = styled.form`
   display: flex;
   align-items: center;
   flex-direction: column;
   margin-top: 140px;
 `;
-const JoinTopBox = styled.form`
+const JoinTopBox = styled.div`
   width: 540px;
   height: 592px;
   display: flex;

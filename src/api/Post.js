@@ -1,6 +1,6 @@
 import { Axios } from "./Axios";
 
-export const AxiosWrite = (data, id, callbackFunctions) => {
+export const AxiosWrite = (data, callbackFunctions) => {
   const { navigateSuccess } = callbackFunctions;
 
   Axios.post("/api/posts", {
@@ -9,7 +9,7 @@ export const AxiosWrite = (data, id, callbackFunctions) => {
   })
     .then((res) => {
       navigateSuccess();
-      console.log(id);
+      console.log(data.id);
     })
     .catch((error) => {
       error.response.data.message.map((message) => alert(message));
