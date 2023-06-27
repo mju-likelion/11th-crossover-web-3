@@ -1,18 +1,17 @@
-import CANCEL_ICON from '../asset/images/icon_cancel.svg';
 import ERROR_ICON from '../asset/images/icon_error.svg';
 import styled from 'styled-components';
 import {useEffect, useState} from 'react';
 
-    const Input = ({
-       value,
-       setValue,
-       placeholder,
-       type,
-       name,
-       valid,
-       register,
-       onKeyDown,
-    }) => {
+const Input = ({
+                   value,
+                   setValue,
+                   placeholder,
+                   type,
+                   name,
+                   valid,
+                   register,
+                   onKeyDown,
+               }) => {
     const [isEmpty, setIsEmpty] = useState(true);
     const [isValid, setIsValid] = useState(false);
 
@@ -52,8 +51,7 @@ import {useEffect, useState} from 'react';
             </HelperTextBox>
         </InputContainer>
     );
-};
-
+}
 const InputBox = styled.div`
   display: flex;
   justify-content: center;
@@ -62,11 +60,11 @@ const InputBox = styled.div`
   height: 90px;
   border-radius: 25px;
   border: 2px solid ${({isEmpty, isValid, theme}) =>
-      isEmpty
-          ? theme.colors.GRAY
-          : isValid
-              ? theme.colors.RED
-              : theme.colors.GRAY};
+          isEmpty
+                  ? theme.colors.GRAY
+                  : isValid
+                          ? theme.colors.RED
+                          : theme.colors.GRAY};
 `;
 
 const InputContainer = styled.div`
@@ -82,11 +80,11 @@ const InputStyle = styled.input`
   border: none;
   font-size: 20px;
   color: ${({isEmpty, isValid, theme}) =>
-      isEmpty
-          ? theme.colors.GRAY
-          : isValid
-              ? theme.colors.RED
-              : theme.colors.GRAY};
+          isEmpty
+                  ? theme.colors.GRAY
+                  : isValid
+                          ? theme.colors.RED
+                          : theme.colors.GRAY};
   background-color: transparent;
 
   &::placeholder {
