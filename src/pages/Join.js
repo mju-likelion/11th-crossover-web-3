@@ -34,9 +34,6 @@ const Join = () => {
   const [emailMsg, setEmailMsg] = useState(helperMsg.email);
 
   const handleClick = (e) => {
-    // e.preventDefault();
-    // AxiosJoin(joinData, callbackFunctions)
-    console.log("리렌더링됩니다");
     if (isClicked) {
       setImageSrc(AGREEBOX_FALSE);
       setIsClicked(false);
@@ -52,36 +49,30 @@ const Join = () => {
   };
 
   const IdReset = (e) => {
-    e.preventDefault();
     setId("");
     setIdValid(false);
     setIdError(false);
     setIdMsg(helperMsg.id);
   };
   const PasswordReset = (e) => {
-    e.preventDefault();
     setPassword("");
     setPasswordValid(false);
     setPasswordError(false);
     setPasswordMsg(helperMsg.password);
   };
   const EmailReset = (e) => {
-    e.preventDefault();
     setEmail("");
     setEmailValid(false);
     setEmailError(false);
     setEmailMsg(helperMsg.email);
   };
   const onChangeId = (e) => {
-    e.preventDefault();
     setId(e.target.value);
   };
   const onChangePassword = (e) => {
-    e.preventDefault();
     setPassword(e.target.value);
   };
   const onChangeEmail = (e) => {
-    e.preventDefault();
     setEmail(e.target.value);
   };
 
