@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import ShortBtn from "../components/ShortBtn";
 import { AxiosWrite } from "../api/Post";
 import { useNavigate } from "react-router-dom";
-
 export const MAX_TITLE = 20;
 export const MAX_CONTENT = 140;
 
@@ -11,7 +10,6 @@ const Post = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isAble, setIsAble] = useState(false);
-  const [writer, setWriter] = useState();
   const navigate = useNavigate();
   const onChangeTitle = (e) => {
     setTitle(e.target.value.slice(0, MAX_TITLE));
@@ -30,7 +28,6 @@ const Post = () => {
 
   const writeBoard = (e) => {
     e.preventDefault();
-    setWriter(sessionStorage.getItem("id"));
     AxiosWrite(postData, callbackFunctions);
   };
 
@@ -122,7 +119,7 @@ const Notice = styled.div`
   font-weight: 500;
   color: GRAY;
 `;
-const Button = styled.div`
+const Button = styled.button`
   margin-left: 497px;
 `;
 
