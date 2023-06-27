@@ -34,7 +34,7 @@ function App() {
                     <Header isLoggedIn={isLoggedIn} logout={logout}/>
                     <Routes>
                         <Route index path={"/"} element={
-                            <AuthRoute isLoggedIn={isLoggedIn} component={<Main />} />
+                            <AuthRoute isLoggedIn={isLoggedIn} component={<Main accessToken={accessToken}/>} />
                         }/>
                         <Route path={"/login"} element={<Login loginToggle={loginToggle}/>} />
                         <Route path={"/join"} element={<Join/>}/>
