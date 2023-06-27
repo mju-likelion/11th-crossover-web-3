@@ -13,7 +13,7 @@ const Button = styled.button`
   height: 90px;
   border-radius: 25px;
   background-color: ${({ isAble, theme }) =>
-          isAble ? theme.colors.BLUE2 : theme.colors.BLUE1};
+      isAble ? theme.colors.BLUE2 : theme.colors.BLUE1};
   font-size: 36px;
   font-weight: 600;
   color: white;
