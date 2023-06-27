@@ -96,7 +96,7 @@ const Login = ({loginToggle}) => {
                         />
                         <LongBtn isAble={isAble} text={'로그인'} type='submit' />
                         <SignupBox>
-                            <SignUpBtn>회원가입</SignUpBtn>
+                            <SignUpBtn onClick={()=>navigate("/join")}>회원가입</SignUpBtn>
                         </SignupBox>
                     </form>
                 </Container>

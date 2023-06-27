@@ -1,4 +1,5 @@
 import ERROR_ICON from '../asset/images/icon_error.svg';
+import CANCEL_ICON from '../asset/images/icon_cancel.svg'
 import styled from 'styled-components';
 import {useEffect, useState} from 'react';
 
