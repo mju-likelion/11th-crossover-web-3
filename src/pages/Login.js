@@ -5,15 +5,17 @@ import Input from '../components/Input';
 import styled from 'styled-components';
 import LongBtn from '../components/LongBtn';
 import { useEffect, useState } from 'react';
+import {AxiosLogin} from "../api/Login";
+import {useNavigate} from "react-router-dom";
 
-export const ID_ERROR_MSG =
-    '영문과 숫자를 조합하여 5~10글자 미만으로 입력하여 주세요.';
-export const PWD_ERROR_MSG =
-    '영문과 숫자, 특수기호를 조합하여 8~14 글자 미만으로 입력하여 주세요.';
 export const ID_MSG =
-    '사용할 수 없는 아이디 입니다.';
+    '영문과 숫자을 조합하여 5~10글자 미만으로 입력하여 주세요.';
 export const PWD_MSG =
-    '사용할 수 없는 비밀번호 입니다.';
+    '영문과 숫자, 특수기호를 조합하여 8~14 글자 미만으로 입력하여 주세요.';
+export const ID_ERROR_MSG =
+    '아이디를 잘못 입력하셨습니다. 다시 입력해주세요.';
+export const PWD_ERROR_MSG =
+    '비밀번호 잘못 입력하셨습니다. 다시 입력해주세요.';
 
 
 const schema = yup.object().shape({
@@ -27,7 +29,7 @@ const schema = yup.object().shape({
 });
 
 
-const Login = () => {
+const Login = ({loginToggle}) => {
     const [isAble, setIsAble] = useState(true);
     const {
         register,
@@ -39,9 +41,14 @@ const Login = () => {
         resolver: yupResolver(schema),
         mode: 'onChange',
     });
+    const navigate = useNavigate();
     const value = watch();
-    const onSubmit = () => {
-        console.log(value.id);
+    const onSubmit = (data) => {
+        AxiosLogin(data, loginToggle, ()=>navigate("/"));
+        console.log(data);
+        setValue('id', '')
+        setValue('password', '')
+        document.getElementsByName("id")[0].focus();
     };
     useEffect(() => {
         setIsAble(value.id && value.password);
@@ -60,8 +67,16 @@ const Login = () => {
                             placeholder='아이디'
                             type='text'
                             name={'id'}
-                            errors={errors.id}
+                            valid={errors.id}
                             register={register}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    e.preventDefault();
+                                    if (!errors.id) {
+                                        document.getElementsByName("password")[0].focus();
+                                    }
+                                }
+                            }}
                         />
                         <Input
                             value={value}
@@ -70,12 +85,18 @@ const Login = () => {
                             label='Password'
                             type='password'
                             name={'password'}
-                            errors={errors.password}
+                            valid={errors.password}
                             register={register}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    e.preventDefault();
+                                    handleSubmit(onSubmit)();
+                                }
+                            }}
                         />
                         <LongBtn isAble={isAble} text={'로그인'} type='submit' />
                         <SignupBox>
-                            <SignUpBtn>회원가입</SignUpBtn>
+                            <SignUpBtn onClick={()=>navigate("/join")}>회원가입</SignUpBtn>
                         </SignupBox>
                     </form>
                 </Container>
