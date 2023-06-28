@@ -8,7 +8,7 @@ export const AxiosPost = (page, accessToken, callbackFunction) => {
             'Authorization': `Bearer ${accessToken}`
         },
         params: {
-            size: parseInt(POST_SIZE),
+            size: POST_SIZE,
             page: page,
         }
     })

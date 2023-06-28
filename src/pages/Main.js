@@ -9,11 +9,15 @@ import {AxiosPost} from "../api/Post";
 const Main = ({accessToken}) => {
 
     const [postList, setPostList] = useState([])
-    // const [page, setPage]= useState(1)
-    const page = 1;
+    const [page, setPage] = useState(1)
+    const [isLoading, setIsLoading] = useState(false)
 
     const callbackFunction = (newPostList) => {
-        setPostList((prevPostList) => [...prevPostList, [newPostList]]);
+        setPostList((prevPostList) => [...prevPostList, ...newPostList]);
+        setPage((prev) => prev + 1);
+        console.log("callbackFunction 다음에" + page)
+        console.log(postList)
+        setIsLoading(false)
     }
 
     // nowDate랑 createAt 비교해서
@@ -27,7 +31,7 @@ const Main = ({accessToken}) => {
 
         const hours = createdAtDate.getHours(); // 시
         const minutes = createdAtDate.getMinutes(); // 분
-        const todayTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+        const todayTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`; // 2자리씩 표현
 
         return (
             {
@@ -37,10 +41,34 @@ const Main = ({accessToken}) => {
         )
     }
 
+    // 처음 데이터 Axios 호출
     useEffect(() => {
         AxiosPost(page, accessToken, callbackFunction)
         console.log(page)
     }, [])
+
+    useEffect(() => {
+        // 스크롤 이벤트 처리
+        // 현재 창의 높이, 스크롤 위치 비교
+        // 페이지의 맨 아래에 도달했을 때만 Axios 요청-> isLoading === true일 때 요청
+        const handleScroll = () => {
+            if (
+                window.innerHeight + window.scrollY >=
+                document.documentElement.scrollHeight && !isLoading
+            ) {
+                setIsLoading(true);
+            }
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [page]);// 페이지 값이 변할때마다 실행
+
+
+    useEffect(() => {
+        if (isLoading) {
+            AxiosPost(page, accessToken, callbackFunction);
+        }
+    }, [isLoading]);
 
 
     return (
@@ -53,7 +81,8 @@ const Main = ({accessToken}) => {
                         </Link>
                     </ContentHeader>
                     {
-                        postList[page - 1] && postList[page - 1][0].map((item, index) => {
+                        postList.length > 0 && postList.map((item, index) => { // 초기 빈배열이 아닐 때 실행
+                            const daysAgo = parseInt(dateCalculation(item.createdAt).isToday);
                             const isToday = dateCalculation(item.createdAt).isToday < 1;
                             const todayTime = dateCalculation(item.createdAt).todayTime;
 
@@ -69,7 +98,7 @@ const Main = ({accessToken}) => {
                                                 <ContentName>{item.title}</ContentName>
                                                 <ContentText>{item.content}</ContentText>
                                             </ShowBox>
-                                            <TimeShow>{isToday ? `${todayTime}` : `${isToday}days ago`}</TimeShow>
+                                            <TimeShow>{isToday ? `${todayTime}` : `${daysAgo}일전`}</TimeShow>
                                         </ContentShow>
                                     </ShowContent>
                                 </Link>
@@ -130,9 +159,12 @@ const ContentText = styled.div`
   border: 2px solid ${({theme}) => theme.colors.BLUE1};
 `;
 const TimeShow = styled.div`
-  font-size: 20px;
+  width: 72px;
+  font-size: 18px;
+  font-weight: 600;
   align-self: flex-end;
   padding-top: 13px;
   color: ${({theme}) => theme.colors.GRAY};
+  white-space: nowrap;
 `;
 export default Main;
