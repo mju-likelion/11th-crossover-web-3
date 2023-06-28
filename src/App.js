@@ -36,10 +36,14 @@ function App() {
                         <Route index path={"/"} element={
                             <AuthRoute isLoggedIn={isLoggedIn} component={<Main accessToken={accessToken}/>} />
                         }/>
+                        <Route path={"/write"} element={
+                            <AuthRoute isLoggedIn={isLoggedIn} component={<Post accessToken={accessToken}/>} />
+                        }/>
+                        <Route path={"/:postId"} element={
+                            <AuthRoute isLoggedIn={isLoggedIn} component={<Content accessToken={accessToken}/>} />
+                        }/>
                         <Route path={"/login"} element={<Login loginToggle={loginToggle}/>} />
                         <Route path={"/join"} element={<Join/>}/>
-                        <Route path={"/write"} element={<Post/>}/>
-                        <Route path={"/:postId"} element={<Content accessToken={accessToken}/>}/>
                     </Routes>
                 </BrowserRouter>
             </ThemeProvider>
