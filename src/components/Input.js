@@ -4,14 +4,14 @@ import styled from 'styled-components';
 import {useEffect, useState} from 'react';
 
 const Input = ({
-                   value,
-                   setValue,
-                   placeholder,
-                   type,
-                   name,
-                   valid,
-                   register,
-                   onKeyDown,
+       value,
+       setValue,
+       placeholder,
+       type,
+       name,
+       valid,
+       register,
+       onKeyDown,
                }) => {
     const [isEmpty, setIsEmpty] = useState(true);
     const [isValid, setIsValid] = useState(false);
@@ -40,10 +40,10 @@ const Input = ({
                     onKeyDown={onKeyDown}
                 />
                 <ShowImg isEmpty={isEmpty} isValid={isValid}>
-                    {!isEmpty && isValid ? <img src={ERROR_ICON} alt='error'/> : null}
+                    {(!isEmpty && isValid) && <img src={ERROR_ICON} alt='error'/>}
                 </ShowImg>
                 <CancelBtn onClick={onClick}>
-                    {value[name] === '' ? null : <img src={CANCEL_ICON} alt='cancel'/>}
+                    {value[name] && <img src={CANCEL_ICON} alt='cancel'/>}
                 </CancelBtn>
             </InputBox>
 
