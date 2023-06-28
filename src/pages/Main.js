@@ -4,7 +4,7 @@ import PROFILE_ME from "../asset/images/icon_profile_me.svg";
 import PROFILE_DEFULAT from "../asset/images/icon_profile_default.svg";
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {AxiosPost} from "../api/Post";
+import {getAllPost} from "../api/Post";
 
 const Main = ({accessToken}) => {
 
@@ -15,8 +15,6 @@ const Main = ({accessToken}) => {
     const callbackFunction = (newPostList) => {
         setPostList((prevPostList) => [...prevPostList, ...newPostList]);
         setPage((prev) => prev + 1);
-        console.log("callbackFunction 다음에" + page)
-        console.log(postList)
         setIsLoading(false)
     }
 
@@ -43,8 +41,7 @@ const Main = ({accessToken}) => {
 
     // 처음 데이터 Axios 호출
     useEffect(() => {
-        AxiosPost(page, accessToken, callbackFunction)
-        console.log(page)
+        getAllPost(page, accessToken, callbackFunction)
     }, [])
 
     useEffect(() => {
@@ -66,7 +63,7 @@ const Main = ({accessToken}) => {
 
     useEffect(() => {
         if (isLoading) {
-            AxiosPost(page, accessToken, callbackFunction);
+            getAllPost(page, accessToken, callbackFunction);
         }
     }, [isLoading]);
 

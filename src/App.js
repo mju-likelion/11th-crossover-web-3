@@ -39,7 +39,7 @@ function App() {
                         <Route path={"/login"} element={<Login loginToggle={loginToggle}/>} />
                         <Route path={"/join"} element={<Join/>}/>
                         <Route path={"/write"} element={<Post/>}/>
-                        <Route path={"/:postId"} element={<Content/>}/>
+                        <Route path={"/:postId"} element={<Content accessToken={accessToken}/>}/>
                     </Routes>
                 </BrowserRouter>
             </ThemeProvider>
