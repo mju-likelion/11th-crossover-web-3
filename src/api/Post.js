@@ -59,3 +59,23 @@ export const getPostDetail = (id, accessToken, callbackFunction) => {
       error.response.data.message.map((message) => console.log(message));
     });
 };
+
+export const deletePost = (id, accessToken, callbackFunctions) => {
+  const { navigateSuccess } = callbackFunctions;
+  Axios.delete(`/api/posts/${id}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    params: {
+      id: id,
+    },
+  })
+    .then((res) => {
+      navigateSuccess();
+      console.log(res);
+    })
+    .catch((error) => {
+      //   error.response.data.message.map((message) => alert(message));
+      alert("error", error);
+    });
+};

@@ -4,9 +4,10 @@ import { MAX_TITLE } from "./Post";
 import { MAX_CONTENT } from "./Post";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getPostDetail } from "../api/Post";
-
+import { getPostDetail, deletePost } from "../api/Post";
+import { useNavigate } from "react-router-dom";
 const Content = ({ accessToken }) => {
+  const navigate = useNavigate();
   const { postId } = useParams();
   const [data, setData] = useState(null);
   const { title, content, isMine } = data || {}; //객체로 초기화
@@ -19,6 +20,20 @@ const Content = ({ accessToken }) => {
   useEffect(() => {
     getPostDetail(postId, accessToken, callbackFunction);
   }, []);
+
+  const deleteHandler = (e) => {
+    e.preventDefault();
+    if (window.confirm("정말 삭제합니까?")) {
+      deletePost(postId, accessToken, deleteFunction);
+      alert("삭제되었습니다.");
+    } else {
+      alert("취소되었습니다.");
+    }
+  };
+
+  const deleteFunction = {
+    navigateSuccess: () => navigate("/"),
+  };
 
   return (
     <>
@@ -42,9 +57,9 @@ const Content = ({ accessToken }) => {
             </PostLimit>
           </InputBox>
           <Notice isMine={isMine}>※ 작성된 게시글은 수정이 불가합니다.</Notice>
-          <Button isMine={isMine}>
+          <DeleteBtn isMine={isMine} onClick={deleteHandler}>
             <ShortBtn text={"삭제하기"} type={"delete"} />
-          </Button>
+          </DeleteBtn>
         </Container>
       )}
     </>
@@ -106,7 +121,7 @@ const Notice = styled.div`
   color: GRAY;
   visibility: ${(props) => (props.isMine ? "visible" : "hidden")};
 `;
-const Button = styled.div`
+const DeleteBtn = styled.button`
   margin-left: 497px;
   visibility: ${(props) => (props.isMine ? "visible" : "hidden")};
 `;
