@@ -1,5 +1,25 @@
 import { Axios } from "./Axios";
 
+export const getAllPost = (page, accessToken, callbackFunction) => {
+  const POST_SIZE = 10;
+
+  Axios.get("/api/posts", {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    params: {
+      size: POST_SIZE,
+      page: page,
+    },
+  })
+    .then((res) => {
+      callbackFunction(res.data);
+    })
+    .catch((error) => {
+      error.response.data.message.map((message) => console.log(message));
+    });
+};
+
 export const AxiosWrite = (data, callbackFunctions) => {
   const { navigateSuccess } = callbackFunctions;
   const token = JSON.parse(localStorage.getItem("accessToken"));
@@ -17,27 +37,25 @@ export const AxiosWrite = (data, callbackFunctions) => {
   )
     .then((res) => {
       navigateSuccess();
-      window.localStorage.setItem("id", JSON.stringify(res.data.id));
-      console.log(res);
-      console.log("작성", res.data);
-      console.log(res.data.id);
     })
     .catch((error) => {
       error.response.data.message.map((message) => alert(message));
     });
 };
 
-export const AxiosDelete = (callbackFunctions) => {
-  const { navigateSuccess } = callbackFunctions;
-  const id = JSON.parse(localStorage.getItem("id"));
-  Axios.delete(`/api/posts/${id}`)
+export const getPostDetail = (id, accessToken, callbackFunction) => {
+  Axios.get(`/api/posts/${id}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    params: {
+      id: id,
+    },
+  })
     .then((res) => {
-      navigateSuccess();
-      console.log(res);
-      alert("삭제");
+      callbackFunction(res.data);
     })
     .catch((error) => {
-      //   error.response.data.message.map((message) => alert(message));
-      alert("error", error);
+      error.response.data.message.map((message) => console.log(message));
     });
 };

@@ -1,50 +1,52 @@
 import ShortBtn from "../components/ShortBtn";
 import styled from "styled-components";
-import DUMMY_DATA from "../asset/data/PostDummyData.json";
 import { MAX_TITLE } from "./Post";
 import { MAX_CONTENT } from "./Post";
 import { useParams } from "react-router-dom";
-import { AxiosDelete } from "../api/Post";
-import { useNavigate } from "react-router-dom";
-const Content = () => {
+import { useEffect, useState } from "react";
+import { getPostDetail } from "../api/Post";
+
+const Content = ({ accessToken }) => {
   const { postId } = useParams();
+  const [data, setData] = useState(null);
+  const { title, content, isMine } = data || {}; //객체로 초기화
+  // || {} -> undefined로 선언되어 .length 적용 안되는 에러 발생되는 상황 방지 위함
 
-  const { title, content, isMine } = DUMMY_DATA.contents[postId - 1];
-  const navigate = useNavigate();
-  const deleteBoard = (e) => {
-    e.preventDefault();
-    AxiosDelete(callbackFunctions);
+  const callbackFunction = (contentData) => {
+    setData(contentData);
   };
 
-  const callbackFunctions = {
-    navigateSuccess: () => navigate("/"),
-  };
+  useEffect(() => {
+    getPostDetail(postId, accessToken, callbackFunction);
+  }, []);
 
   return (
     <>
-      <Container>
-        <InputBox height={"134px"}>
-          <TitleBox>
-            <TitleLabel>제목 :</TitleLabel>
-            <Title>{title}</Title>
-            <TextLimit>
-              ( {title.length} / {MAX_TITLE} )
-            </TextLimit>
-          </TitleBox>
-        </InputBox>
-        <InputBox height={"751px"}>
-          <TextArea>{content}</TextArea>
-          <PostLimit>
-            <TextLimit>
-              ( {content.length} / {MAX_CONTENT} )
-            </TextLimit>
-          </PostLimit>
-        </InputBox>
-        <Notice isMine={isMine}>※ 작성된 게시글은 수정이 불가합니다.</Notice>
-        <Button isMine={isMine} onClick={deleteBoard}>
-          <ShortBtn text={"삭제하기"} type={"delete"} />
-        </Button>
-      </Container>
+      {data && (
+        <Container>
+          <InputBox height={"134px"}>
+            <TitleBox>
+              <TitleLabel>제목 :</TitleLabel>
+              <Title>{title}</Title>
+              <TextLimit>
+                ( {title.length} / {MAX_TITLE} )
+              </TextLimit>
+            </TitleBox>
+          </InputBox>
+          <InputBox height={"751px"}>
+            <TextArea>{content}</TextArea>
+            <PostLimit>
+              <TextLimit>
+                ( {content.length} / {MAX_CONTENT} )
+              </TextLimit>
+            </PostLimit>
+          </InputBox>
+          <Notice isMine={isMine}>※ 작성된 게시글은 수정이 불가합니다.</Notice>
+          <Button isMine={isMine}>
+            <ShortBtn text={"삭제하기"} type={"delete"} />
+          </Button>
+        </Container>
+      )}
     </>
   );
 };

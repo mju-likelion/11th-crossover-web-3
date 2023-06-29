@@ -9,7 +9,7 @@ const AuthRoute = ({isLoggedIn, component: Component}) => {
             alert("로그인이 필요합니다.");
             navigate("/login");
         }
-    }, [isLoggedIn, navigate]);
+    }, [isLoggedIn]);
 
     return (
         isLoggedIn ? Component : null
