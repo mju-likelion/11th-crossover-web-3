@@ -69,10 +69,8 @@ export const deletePost = (id, accessToken, callbackFunctions) => {
   })
     .then((res) => {
       navigateSuccess();
-      console.log(res);
     })
     .catch((error) => {
-      //   error.response.data.message.map((message) => alert(message));
-      alert("error", error);
+      error.response.data.message.map((message) => alert(message));
     });
 };
