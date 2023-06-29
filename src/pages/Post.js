@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import ShortBtn from "../components/ShortBtn";
-import { AxiosWrite } from "../api/Post";
+import { axiosWrite } from "../api/Post";
 import { useNavigate } from "react-router-dom";
 export const MAX_TITLE = 20;
 export const MAX_CONTENT = 140;
@@ -28,7 +28,7 @@ const Post = () => {
 
   const writeBoard = (e) => {
     e.preventDefault();
-    AxiosWrite(postData, callbackFunctions);
+    axiosWrite(postData, callbackFunctions);
   };
 
   const callbackFunctions = {

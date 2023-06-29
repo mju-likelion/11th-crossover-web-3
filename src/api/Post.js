@@ -1,27 +1,26 @@
 import { Axios } from "./Axios";
 
 export const getAllPost = (page, accessToken, callbackFunction) => {
-    const POST_SIZE = 10;
+  const POST_SIZE = 10;
 
-    Axios.get("/api/posts", {
-        headers: {
-            'Authorization': `Bearer ${accessToken}`
-        },
-        params: {
-            size: POST_SIZE,
-            page: page,
-        }
+  Axios.get("/api/posts", {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    params: {
+      size: POST_SIZE,
+      page: page,
+    },
+  })
+    .then((res) => {
+      callbackFunction(res.data);
     })
-        .then((res) => {
-            callbackFunction(res.data);
-        })
-        .catch((error) => {
-            error.response.data.message.map((message) => console.log(message));
-        });
+    .catch((error) => {
+      error.response.data.message.map((message) => console.log(message));
+    });
 };
 
-
-export const AxiosWrite = (data, callbackFunctions) => {
+export const axiosWrite = (data, callbackFunctions) => {
   const { navigateSuccess } = callbackFunctions;
   const token = JSON.parse(localStorage.getItem("accessToken"));
   Axios.post(
@@ -44,21 +43,34 @@ export const AxiosWrite = (data, callbackFunctions) => {
     });
 };
 
-
 export const getPostDetail = (id, accessToken, callbackFunction) => {
-
-    Axios.get(`/api/posts/${id}`, {
-        headers: {
-            'Authorization': `Bearer ${accessToken}`
-        },
-        params: {
-            id: id
-        }
+  Axios.get(`/api/posts/${id}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+    params: {
+      id: id,
+    },
+  })
+    .then((res) => {
+      callbackFunction(res.data);
     })
-        .then((res) => {
-            callbackFunction(res.data)
-        })
-        .catch((error) => {
-            error.response.data.message.map((message) => console.log(message));
-        });
+    .catch((error) => {
+      error.response.data.message.map((message) => console.log(message));
+    });
+};
+
+export const deletePost = (id, accessToken, callbackFunctions) => {
+  const { navigateSuccess } = callbackFunctions;
+  Axios.delete(`/api/posts/${id}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  })
+    .then((res) => {
+      navigateSuccess();
+    })
+    .catch((error) => {
+      error.response.data.message.map((message) => alert(message));
+    });
 };
