@@ -45,7 +45,6 @@ const Login = ({loginToggle}) => {
     const value = watch();
     const onSubmit = (data) => {
         AxiosLogin(data, loginToggle, ()=>navigate("/"));
-        console.log(data);
         setValue('id', '')
         setValue('password', '')
         document.getElementsByName("id")[0].focus();

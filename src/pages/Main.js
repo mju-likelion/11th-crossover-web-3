@@ -2,10 +2,70 @@ import WriteBtn from "../components/ShortBtn";
 import styled from "styled-components";
 import PROFILE_ME from "../asset/images/icon_profile_me.svg";
 import PROFILE_DEFULAT from "../asset/images/icon_profile_default.svg";
-import data from "../asset/data/PostDummyData.json";
 import {Link} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {getAllPost} from "../api/Post";
 
-const Main = () => {
+const Main = ({accessToken}) => {
+
+    const [postList, setPostList] = useState([])
+    const [page, setPage] = useState(1)
+    const [isLoading, setIsLoading] = useState(false)
+
+    const callbackFunction = (newPostList) => {
+        setPostList((prevPostList) => [...prevPostList, ...newPostList]);
+        setPage((prev) => prev + 1);
+        setIsLoading(false)
+    }
+
+    // nowDate랑 createAt 비교해서
+    // 24시간 전까지 -> 24시 형태로 시:분
+    // 24시간 지난 경우 -> 1일전 , 2일전 …
+    const dateCalculation = (createdAt) => {
+        const nowDate = new Date();
+        const createdAtDate = new Date(createdAt);
+        const timeDiffInMilliseconds = Math.abs(nowDate - createdAtDate); // 시간 간격을 밀리초로 계산
+        const timeDiffInDays = timeDiffInMilliseconds / 1000 / 60 / 60 / 24; // 각 초, 분, 시, 일
+
+        const hours = createdAtDate.getHours(); // 시
+        const minutes = createdAtDate.getMinutes(); // 분
+        const todayTime = `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`; // 2자리씩 표현
+
+        return (
+            {
+                isToday: timeDiffInDays,
+                todayTime: todayTime
+            }
+        )
+    }
+
+    // 처음 데이터 Axios 호출
+    useEffect(() => {
+        getAllPost(page, accessToken, callbackFunction)
+    }, [])
+
+    useEffect(() => {
+        // 스크롤 이벤트 처리
+        // 현재 창의 높이, 스크롤 위치 비교
+        // 페이지의 맨 아래에 도달했을 때만 Axios 요청-> isLoading === true일 때 요청
+        const handleScroll = () => {
+            if (
+                window.innerHeight + window.scrollY >=
+                document.documentElement.scrollHeight && !isLoading
+            ) {
+                setIsLoading(true);
+            }
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, [page]);// 페이지 값이 변할때마다 실행
+
+
+    useEffect(() => {
+        if (isLoading) {
+            getAllPost(page, accessToken, callbackFunction);
+        }
+    }, [isLoading]);
 
 
     return (
@@ -17,8 +77,12 @@ const Main = () => {
                             <WriteBtn text="작성하기" isAble={true} type={"write"}/>
                         </Link>
                     </ContentHeader>
-                    {data &&
-                        data.contents.map((item, index) => {
+                    {
+                        postList.length > 0 && postList.map((item, index) => { // 초기 빈배열이 아닐 때 실행
+                            const daysAgo = parseInt(dateCalculation(item.createdAt).isToday);
+                            const isToday = dateCalculation(item.createdAt).isToday < 1;
+                            const todayTime = dateCalculation(item.createdAt).todayTime;
+
                             return (
                                 <Link to={`/${item.id}`} key={item.id}>
                                     <ShowContent>
@@ -31,7 +95,7 @@ const Main = () => {
                                                 <ContentName>{item.title}</ContentName>
                                                 <ContentText>{item.content}</ContentText>
                                             </ShowBox>
-                                            <TimeShow>{item.time}</TimeShow>
+                                            <TimeShow>{isToday ? `${todayTime}` : `${daysAgo}일전`}</TimeShow>
                                         </ContentShow>
                                     </ShowContent>
                                 </Link>
@@ -48,7 +112,6 @@ const ContentBox = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
 const ContentWrap = styled.div`
   width: 783px;
 `;
@@ -57,7 +120,6 @@ const ContentHeader = styled.div`
   justify-content: flex-end;
   margin: 20px 0 23px 0;
 `;
-
 const ShowContent = styled.a`
   display: flex;
   margin-bottom: 54px;
@@ -68,12 +130,10 @@ const ContentShow = styled.div`
   height: 343px;
   display: flex;
   border-radius: 25px;
-
   img {
     height: 62px;
     width: 62px;
   }
-
   border: 2px solid ${({theme}) => theme.colors.GRAY};
 `;
 const ShowBox = styled.div`
@@ -85,7 +145,6 @@ const ContentName = styled.div`
   font-weight: 700;
   margin-left: 39px;
 `;
-
 const ContentText = styled.div`
   border-radius: 25px;
   height: 200px;
@@ -96,11 +155,13 @@ const ContentText = styled.div`
   font-weight: 600;
   border: 2px solid ${({theme}) => theme.colors.BLUE1};
 `;
-
 const TimeShow = styled.div`
-  font-size: 20px;
+  width: 72px;
+  font-size: 18px;
+  font-weight: 600;
   align-self: flex-end;
   padding-top: 13px;
   color: ${({theme}) => theme.colors.GRAY};
+  white-space: nowrap;
 `;
 export default Main;
