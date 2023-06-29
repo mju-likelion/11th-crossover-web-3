@@ -13,8 +13,8 @@ import AuthRoute from "./pages/AuthRoute";
 
 
 function App() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const accessToken = JSON.parse(localStorage.getItem('accessToken'));
+    const [isLoggedIn, setIsLoggedIn] = useState(!!accessToken);
     const loginToggle = () => {
         setIsLoggedIn(true)
     }
