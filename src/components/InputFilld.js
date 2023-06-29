@@ -38,6 +38,7 @@ const InputFilld = ({
           </ShowImg>
           <CancelBtn
             onClick={(e) => {
+              e.preventDefault();
               onClick(e);
             }}
           >

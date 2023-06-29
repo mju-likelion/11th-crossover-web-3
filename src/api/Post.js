@@ -20,7 +20,7 @@ export const getAllPost = (page, accessToken, callbackFunction) => {
     });
 };
 
-export const AxiosWrite = (data, callbackFunctions) => {
+export const axiosWrite = (data, callbackFunctions) => {
   const { navigateSuccess } = callbackFunctions;
   const token = JSON.parse(localStorage.getItem("accessToken"));
   Axios.post(
@@ -65,9 +65,6 @@ export const deletePost = (id, accessToken, callbackFunctions) => {
   Axios.delete(`/api/posts/${id}`, {
     headers: {
       Authorization: `Bearer ${accessToken}`,
-    },
-    params: {
-      id: id,
     },
   })
     .then((res) => {
