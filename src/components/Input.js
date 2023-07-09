@@ -10,11 +10,13 @@ const Input = ({
   type,
   name,
   valid,
+  defaltMsg,
   register,
   onKeyDown,
 }) => {
   const [isEmpty, setIsEmpty] = useState(true);
   const [isValid, setIsValid] = useState(false);
+  const [helperMsg, setHelperMsg] = useState(defaltMsg)
 
   const onClick = () => {
     setValue(name, "");
@@ -22,9 +24,17 @@ const Input = ({
   useEffect(() => {
     setIsEmpty(value[name] === "");
   }, [value, name]);
+
   useEffect(() => {
     setIsValid(valid?.message.length > 1);
   }, [valid?.message]);
+
+  useEffect(()=> {
+    if (value[name]){
+      setHelperMsg(valid?.message)
+    }
+    else setHelperMsg(defaltMsg)
+  }, [value[name], valid])
 
   return (
     <InputContainer>
@@ -45,9 +55,8 @@ const Input = ({
           {value[name] && <img src={CANCEL_ICON} alt="cancel" />}
         </CancelBtn>
       </InputBox>
-
       <HelperTextBox isValid={isValid} isEmpty={isEmpty} value={value}>
-        {valid && valid.message}
+        {helperMsg}
       </HelperTextBox>
     </InputContainer>
   );
@@ -67,7 +76,6 @@ const InputBox = styled.div`
         ? theme.colors.RED
         : theme.colors.GRAY};
 `;
-
 const InputContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -104,17 +112,17 @@ const HelperTextBox = styled.p`
   text-align: left;
   font-size: 16px;
   margin-bottom: 21px;
-  visibility: ${({ isEmpty }) => (!isEmpty ? "visible" : "hidden")};
   color: ${({ isEmpty, isValid, theme }) =>
-    isEmpty
-      ? theme.colors.GRAY
-      : isValid
-      ? theme.colors.RED
-      : theme.colors.GRAY};
+      isEmpty
+          ? theme.colors.GRAY
+          : isValid
+          ? theme.colors.RED
+          : theme.colors.GRAY};
 `;
 const ShowImg = styled.div`
   width: 32px;
   height: 32px;
   margin: 0 8px 0 18px;
 `;
+
 export default Input;

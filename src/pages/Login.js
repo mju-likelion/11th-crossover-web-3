@@ -9,7 +9,7 @@ import {AxiosLogin} from "../api/Login";
 import {useNavigate} from "react-router-dom";
 
 export const ID_MSG =
-    '영문과 숫자을 조합하여 5~10글자 미만으로 입력하여 주세요.';
+    '영문과 숫자를 조합하여 5~10글자 미만으로 입력하여 주세요.';
 export const PWD_MSG =
     '영문과 숫자, 특수기호를 조합하여 8~14 글자 미만으로 입력하여 주세요.';
 export const ID_ERROR_MSG =
@@ -19,12 +19,12 @@ export const PWD_ERROR_MSG =
 
 
 const schema = yup.object().shape({
-    id: yup.string().matches(/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{5,10}$/, ID_MSG),
+    id: yup.string().matches(/^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{5,10}$/, ID_ERROR_MSG),
     password: yup
         .string()
         .matches(
             /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[~!@#$%^&*_+=`|\\(){}[\]:;"'<>,.?])[a-zA-Z\d~!@#$%^&*_+=`|\\(){}[\]:;"'<>,.?]{8,14}$/,
-            PWD_MSG
+            PWD_ERROR_MSG
         ),
 });
 
@@ -39,7 +39,7 @@ const Login = ({loginToggle}) => {
         formState: { errors },
     } = useForm({
         resolver: yupResolver(schema),
-        mode: 'onChange',
+        mode: 'onSubmit',
     });
     const navigate = useNavigate();
     const value = watch();
@@ -67,6 +67,7 @@ const Login = ({loginToggle}) => {
                             type='text'
                             name={'id'}
                             valid={errors.id}
+                            defaltMsg={ID_MSG}
                             register={register}
                             onKeyDown={(e) => {
                                 if (e.key === "Enter") {
@@ -85,6 +86,7 @@ const Login = ({loginToggle}) => {
                             type='password'
                             name={'password'}
                             valid={errors.password}
+                            defaltMsg={PWD_MSG}
                             register={register}
                             onKeyDown={(e) => {
                                 if (e.key === "Enter") {
